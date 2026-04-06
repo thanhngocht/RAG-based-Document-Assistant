@@ -3,6 +3,6 @@ __pycache__/
 .env
 .venv/
 volumes/
-demo.text
+demo.txt
 venv/
 backend/venv/
