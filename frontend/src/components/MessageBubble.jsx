@@ -131,8 +131,8 @@ const MessageBubble = ({ message }) => {
             </ReactMarkdown>
           </div>
 
-          {/* Sources (only for assistant messages) */}
-          {isAssistant && sources && sources.length > 0 && (
+       
+          {/* {isAssistant && sources && sources.length > 0 && (
             <div className="message-sources">
               <div className="sources-header">
                 <span className="sources-icon">📄</span>
@@ -201,7 +201,7 @@ const MessageBubble = ({ message }) => {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

@@ -1,8 +1,12 @@
 from datetime import datetime, timezone
+import re
+from typing import List, Dict
+from functools import lru_cache
 
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from starlette.concurrency import run_in_threadpool
+from sentence_transformers import CrossEncoder
 
 from app.daos.history_dao import create_history, list_user_history, serialize_history
 from app.database.milvus import create_retriever, get_llm
@@ -17,6 +21,38 @@ Quy tắc bắt buộc:
 - Nếu căn cứ không đủ để trả lời: trả lời "Không đủ thông tin để trả lời"
 - Chỉ trả lời bằng tiếng Việt
 - Văn phong hành chính – pháp lý
+
+QUAN TRỌNG - Định dạng câu trả lời PHẢI dùng Markdown:
+- Dùng **text** để in đậm các thuật ngữ quan trọng (tên điều khoản, số liệu, tên văn bản)
+- Dùng dấu gạch đầu dòng (- ) cho danh sách
+- Dùng số thứ tự (1. 2. 3.) cho các bước
+- Dùng `text` cho mã số 
+- Xuống dòng 2 lần để tạo đoạn văn mới
+
+"""
+
+SYSTEM_PROMPT_WITH_REFERENCES = """
+Bạn là Trợ lý Ảo tra cứu văn bản hành chính Việt Nam.
+
+Quy tắc bắt buộc:
+- Chỉ trả lời dựa trên CĂN CỨ được cung cấp
+- Không suy đoán
+- Không bổ sung thông tin ngoài căn cứ
+- Nếu căn cứ không đủ để trả lời: trả lời "Không đủ thông tin để trả lời"
+- Chỉ trả lời bằng tiếng Việt
+- Văn phong hành chính – pháp lý
+
+QUAN TRỌNG - Trích dẫn nguồn:
+- Căn cứ được đánh số [1], [2], [3]... (xem phần "CHÚ GIẢI" để biết có bao nhiêu nguồn)
+- CHỈ được trích dẫn các số có trong phần "CHÚ GIẢI"
+- KHÔNG tự tạo số [4], [5]... nếu không có trong danh sách
+- BẮT BUỘC trích dẫn nguồn sau MỖI thông tin quan trọng
+- CHỈ trích dẫn các nguồn THỰC SỰ LIÊN QUAN và được sử dụng trong câu trả lời
+- KHÔNG trích dẫn nguồn không liên quan đến câu hỏi
+- Ví dụ: "Mức thuế suất là 10% [1]" hoặc "Theo quy định tại [2], hàng xuất khẩu được miễn thuế."
+- Có thể trích dẫn nhiều nguồn: "Doanh nghiệp phải đáp ứng các điều kiện [1][3]"
+- Có thể trích dẫn cùng nguồn nhiều lần nếu cần
+
 
 QUAN TRỌNG - Định dạng câu trả lời PHẢI dùng Markdown:
 - Dùng **text** để in đậm các thuật ngữ quan trọng (tên điều khoản, số liệu, tên văn bản)
@@ -84,6 +120,189 @@ def _ask_sync(question: str) -> tuple[str, list[dict]]:
     return answer, sources
 
 
+# ============================================================================
+# NUMBERED REFERENCES SYSTEM
+# ============================================================================
+
+def build_numbered_context(docs: list) -> str:
+    """
+    Xây dựng context với hệ thống đánh số
+    
+    Args:
+        docs: List of Document objects from retriever
+        
+    Returns:
+        Context string with numbered chunks and metadata legend
+        
+    Example:
+        [1] Mức thuế suất thuế GTGT là 10%...
+        
+        [2] Hàng xuất khẩu được miễn thuế...
+        
+        --- CHÚ GIẢI ---
+        [1]: Nghi_dinh_123_2024.pdf, trang 5 - Điều 5. Thuế suất
+        [2]: Nghi_dinh_123_2024.pdf, trang 8 - Điều 12. Miễn thuế
+    """
+    if not docs:
+        return ""
+    
+    # 1. Content với số thứ tự
+    content_parts = []
+    for i, doc in enumerate(docs, 1):
+        content_parts.append(f"[{i}] {doc.page_content}")
+    
+    content = "\n\n".join(content_parts)
+    
+    # 2. Metadata mapping ở cuối (compact format)
+    metadata_map = "\n\n--- CHÚ GIẢI ---\n"
+    for i, doc in enumerate(docs, 1):
+        filename = doc.metadata.get("filename", "Unknown")
+        page = doc.metadata.get("page", "?")
+        heading = doc.metadata.get("heading", "")
+        
+        # Compact format: [1]: filename, tr.X - heading
+        meta_line = f"[{i}]: {filename}, trang {page}"
+        if heading:
+            meta_line += f" - {heading}"
+        
+        metadata_map += meta_line + "\n"
+    
+    return content + metadata_map
+
+
+def extract_sources_from_docs(docs: list) -> list[dict]:
+    """
+    Trích xuất source metadata từ documents để dùng cho download links
+    
+    Args:
+        docs: List of Document objects from retriever
+        
+    Returns:
+        List of source dicts with filename, page, heading, document_id
+    """
+    sources = []
+    for doc in docs:
+        sources.append({
+            "filename": doc.metadata.get("filename", "Unknown"),
+            "page": doc.metadata.get("page", "?"),
+            "heading": doc.metadata.get("heading", ""),
+            "content_preview": doc.page_content[:200],
+            "document_id": doc.metadata.get("document_id")
+        })
+    return sources
+
+
+def inject_download_links(
+    answer: str,
+    sources: list[dict],
+    base_url: str = "/api/v1/chat/documents"
+) -> str:
+    """
+    Inject download links vào câu trả lời
+    
+    Tìm các [1], [2], [3]... trong answer và thêm footnotes với download links
+    
+    Args:
+        answer: Câu trả lời từ LLM (có chứa [1], [2]...)
+        sources: List of source dicts from extract_sources_from_docs()
+        base_url: Base URL for download endpoint
+        
+    Returns:
+        Answer with footnotes containing download links
+        
+    Example output:
+        Mức thuế là 10% [1]...
+        
+        ---
+        **Nguồn tham khảo:**
+        
+        [1] **Nghi_dinh_123.pdf**, trang 5 - _Điều 5. Thuế suất_
+            [📥 Tải xuống văn bản](/api/v1/chat/documents/65abc123/download)
+    """
+    # 1. Tìm tất cả references được sử dụng
+    references_used = set(re.findall(r'\[(\d+)\]', answer))
+    
+    if not references_used:
+        return answer
+    
+    # 2. Build footnotes với download links
+    footnotes = ["\n\n---\n**📚 Nguồn tham khảo:**\n"]
+    
+    for ref_num in sorted(references_used, key=int):
+        idx = int(ref_num) - 1  # Convert to 0-indexed
+        
+        if idx < len(sources):
+            source = sources[idx]
+            filename = source.get("filename", "Unknown")
+            page = source.get("page", "?")
+            heading = source.get("heading", "")
+            document_id = source.get("document_id")
+            
+            # Build footnote
+            footnote = f"\n[{ref_num}] **{filename}**, trang {page}"
+            
+            # Add heading if available
+            if heading:
+                footnote += f" - _{heading}_"
+            
+            # Add download link
+            if document_id:
+                download_url = f"{base_url}/{document_id}/download"
+                footnote += f"  \n    [📥 Tải xuống văn bản]({download_url})"
+            
+            footnotes.append(footnote)
+    
+    # 3. Combine answer + footnotes
+    return answer + "".join(footnotes)
+
+
+def _ask_sync_numbered(question: str) -> tuple[str, list[dict]]:
+    """
+    Ask question with numbered references system
+    
+    Improvements over _ask_sync():
+    - Context có metadata nhưng compact hơn (trailing metadata)
+    - LLM trích dẫn với [1], [2]...
+    - Auto-inject download links vào footnotes
+    - Token savings ~25%
+    
+    Args:
+        question: User's question
+        
+    Returns:
+        (answer_with_links, sources)
+    """
+    retriever = create_retriever()
+    docs = retriever.invoke(question)
+    
+    # DEBUG
+    print(f"[DEBUG NUMBERED] Number of docs retrieved: {len(docs)}")
+    if docs:
+        print(f"[DEBUG NUMBERED] First doc metadata: {docs[0].metadata}")
+    
+    # Build numbered context (text + compact metadata)
+    context = build_numbered_context(docs)
+    
+    if not context.strip():
+        return "Không đủ thông tin để trả lời", []
+    
+    # Use new prompt with citation instructions
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", SYSTEM_PROMPT_WITH_REFERENCES),
+        ("human", USER_PROMPT)
+    ])
+    chain = prompt | get_llm() | StrOutputParser()
+    answer = chain.invoke({"context": context, "question": question})
+    
+    # Extract sources for download
+    sources = extract_sources_from_docs(docs)
+    
+    # Inject download links into answer
+    answer_with_links = inject_download_links(answer, sources)
+    
+    return answer_with_links, sources
+
+
 async def ask_question(user_id: str, question: str, conversation_id: str | None = None) -> dict:
     """
     Ask a question and get an answer with sources.
@@ -109,8 +328,8 @@ async def ask_question(user_id: str, question: str, conversation_id: str | None 
         content=question
     )
     
-    # Get answer from LLM
-    answer, sources = await run_in_threadpool(_ask_sync, question)
+    # Get answer from LLM (using numbered references system)
+    answer, sources = await run_in_threadpool(_ask_sync_numbered, question)
     
     # Add assistant message to conversation
     assistant_message = await add_message_to_conversation(

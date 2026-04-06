@@ -156,9 +156,17 @@ def clean_metadata(doc, index, file_path: Path):
     if "headings" in dl_meta:
         heading = " ".join(dl_meta["headings"])
 
+    # ✅ Remove UUID prefix from filename for cleaner display
+    # "abc123def_Nghi_dinh_123_2024.pdf" -> "Nghi_dinh_123_2024.pdf"
+    full_name = file_path.name
+    if '_' in full_name:
+        original_name = full_name.split('_', 1)[1]  # Split at first underscore, take second part
+    else:
+        original_name = full_name
+
     return {
         "source": str(file_path),
-        "filename": file_path.name,
+        "filename": original_name,  # Clean filename without UUID prefix
         "chunk_id": index,
         "page": page,
         "heading": heading
