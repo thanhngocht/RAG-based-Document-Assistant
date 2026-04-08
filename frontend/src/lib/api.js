@@ -6,7 +6,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 60000, // 60 seconds - enough for LLM processing
+  timeout: 120000, // 120 seconds - enough for LLM processing
 });
 
 // Request interceptor - thêm token vào header nếu có
@@ -69,15 +69,24 @@ api.interceptors.response.use(
         }
       }
       
-      // Parse và trả về error message
+      // Parse error message but keep the original error object
       const errorMessage = parseErrorMessage(data);
-      return Promise.reject(errorMessage);
+      // Create new error with message but preserve response info
+      const enrichedError = new Error(errorMessage);
+      enrichedError.response = error.response;
+      enrichedError.request = error.request;
+      enrichedError.config = error.config;
+      enrichedError.status = status;
+      return Promise.reject(enrichedError);
     } else if (error.request) {
       // Request được gửi nhưng không nhận được response
-      return Promise.reject('Không thể kết nối đến server');
+      const networkError = new Error('Không thể kết nối đến server');
+      networkError.request = error.request;
+      networkError.config = error.config;
+      return Promise.reject(networkError);
     } else {
       // Lỗi khác
-      return Promise.reject(error.message || 'Đã có lỗi xảy ra');
+      return Promise.reject(error);
     }
   }
 );

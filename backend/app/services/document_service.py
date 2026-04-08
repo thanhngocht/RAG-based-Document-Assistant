@@ -93,7 +93,7 @@ def build_converter(use_ocr=False, use_table=False, lang="vi"):  # ✅ Disabled 
     logger.info("Converter built successfully")
     return converter
 
-ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc"}
+ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc", ".txt"}
 
 
 
@@ -144,15 +144,15 @@ def clean_metadata(doc, index, file_path: Path):
 
     dl_meta = meta.get("dl_meta", {})
 
-    # extract page
-    page = None
+    # extract page - default to 1 if not found
+    page = 1
     try:
         page = dl_meta["doc_items"][0]["prov"][0]["page_no"]
     except Exception:
         pass
 
-    # extract heading
-    heading = None
+    # extract heading - default to empty string if not found
+    heading = ""
     if "headings" in dl_meta:
         heading = " ".join(dl_meta["headings"])
 
@@ -227,7 +227,7 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
 
     if extension not in ALLOWED_EXTENSIONS:
         logger.warning(f"Invalid file extension: {extension}. Allowed: {ALLOWED_EXTENSIONS}")
-        raise HTTPException(400, "Chỉ hỗ trợ PDF/DOC/DOCX")
+        raise HTTPException(400, "Chỉ hỗ trợ PDF/TXT/DOC/DOCX")
 
     logger.debug(f"Creating upload directory: {settings.upload_dir}")
     settings.upload_dir.mkdir(parents=True, exist_ok=True)
@@ -246,6 +246,10 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
         logger.error(f"Error saving file: {str(e)}", exc_info=True)
         raise
 
+    # Get file size
+    file_size = destination.stat().st_size if destination.exists() else 0
+    logger.debug(f"File size: {file_size} bytes")
+
     # ✅ 1. create document trước
     logger.debug("Creating document record in database")
     doc = await create_document(
@@ -254,6 +258,7 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
             "source_path": str(destination),
             "uploaded_by": uploaded_by,
             "status": "processing",
+            "file_size": file_size,
         }
     )
     

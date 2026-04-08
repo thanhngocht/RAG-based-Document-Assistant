@@ -76,23 +76,22 @@ export const sendMessage = async (question, conversationId = null) => {
       payload.conversation_id = conversationId;
     }
 
+    console.log('[DEBUG] Sending message:', { payload, hasToken: !!localStorage.getItem('access_token') });
     const response = await api.post('/chat/ask', payload);
+    console.log('[DEBUG] Message sent successfully:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error sending message:', error);
-    console.error('Error details:', error.response?.data || error.message);
+    console.error('[ERROR] Error sending message:', error);
+    console.error('[ERROR] Error details:', {
+      message: error.message,
+      status: error.status,
+      response: error.response?.data,
+      hasRequest: !!error.request,
+      hasResponse: !!error.response
+    });
     
-    // Throw user-friendly error message
-    if (error.response) {
-      // Server responded with error
-      throw error.response.data?.detail || 'Lỗi từ server';
-    } else if (error.request) {
-      // Request made but no response
-      throw 'Không thể kết nối đến server';
-    } else {
-      // Something else happened
-      throw error.message || 'Có lỗi xảy ra';
-    }
+    // Error message is now in error.message
+    throw error.message || 'Có lỗi xảy ra';
   }
 };
 

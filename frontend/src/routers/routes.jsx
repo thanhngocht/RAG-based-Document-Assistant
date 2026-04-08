@@ -5,7 +5,9 @@ import App from "../App.jsx";
 import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
 import TestProgress from "../pages/TestProgress.jsx";
-import Conversation from "../pages/Conversation.jsx"
+import Conversation from "../pages/Conversation.jsx";
+import Users from "../pages/Users.jsx";
+import Documents from "../pages/Documents.jsx";
 
 // actions
 import { logoutAction } from "../actions/logoutActions.js";
@@ -32,6 +34,8 @@ const router = createBrowserRouter([
         element: <Register />,
         loader: publicLoader, // Redirect nếu đã login
     },
+
+    
     {
         path: "/login",
         element: <Login />,
@@ -45,6 +49,18 @@ const router = createBrowserRouter([
         path: "/test-progress",
         element: <TestProgress />,
         loader: protectedLoader, // Bảo vệ trang test
+    },
+    {
+        path: "/users",
+        element: <Users/>,
+        loader: protectedLoader,
+
+    },
+    {
+        path: "/documents",
+        element: <Documents/>,
+        loader: protectedLoader,
+
     },
 
 ]);

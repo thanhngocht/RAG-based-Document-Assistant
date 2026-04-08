@@ -14,6 +14,7 @@ class DocumentResponse(BaseModel):
     created_at: datetime | None = None
     chunk_count: int = 0
     error_message: str | None = None
+    file_size: int = 0
 
 class DocumentBase(BaseModel):
     filename: str

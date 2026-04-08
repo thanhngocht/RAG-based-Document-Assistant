@@ -31,25 +31,25 @@ class Settings:
 def load_settings() -> Settings:
     upload_dir_raw = os.getenv("UPLOAD_DIR", str(Path.cwd() / "uploads"))
     return Settings(
-        app_name=os.getenv("APP_NAME", "Administrative Chatbot Backend"),
-        api_prefix=os.getenv("API_PREFIX", "/api/v1"),
+        app_name=os.getenv("APP_NAME"),
+        api_prefix=os.getenv("API_PREFIX"),
 
-        mongo_uri=os.getenv("MONGO_URI", "mongodb://localhost:27017"),
-        mongo_db=os.getenv("MONGO_DB", "admin_chatbot"),
-        users_collection=os.getenv("USERS_COLLECTION", "users"),
-        documents_collection=os.getenv("DOCUMENTS_COLLECTION", "documents"),
-        history_collection=os.getenv("HISTORY_COLLECTION", "chat_history"),
-        conversations_collection=os.getenv("CONVERSATIONS_COLLECTION", "conversations"),
-        messages_collection=os.getenv("MESSAGES_COLLECTION", "messages"),
+        mongo_uri=os.getenv("MONGO_URI"),
+        mongo_db=os.getenv("MONGO_DB"),
+        users_collection=os.getenv("USERS_COLLECTION"),
+        documents_collection=os.getenv("DOCUMENTS_COLLECTION"),
+        history_collection=os.getenv("HISTORY_COLLECTION"),
+        conversations_collection=os.getenv("CONVERSATIONS_COLLECTION"),
+        messages_collection=os.getenv("MESSAGES_COLLECTION"),
 
-        jwt_secret=os.getenv("JWT_SECRET", "change-me"),
-        jwt_algorithm=os.getenv("JWT_ALGORITHM", "HS256"),
-        token_expire_minutes=int(os.getenv("TOKEN_EXPIRE_MINUTES", "120")),
+        jwt_secret=os.getenv("JWT_SECRET"),
+        jwt_algorithm=os.getenv("JWT_ALGORITHM"),
+        token_expire_minutes=int(os.getenv("TOKEN_EXPIRE_MINUTES")),
         
-        collection_name=os.getenv("COLLECTION_NAME", "admin_documents"),
-        milvus_endpoint=os.getenv("MILVUS_ENDPOINT", "http://localhost:19530"),
-        embedding_model=os.getenv("EMBEDDING_MODEL", "nomic-embed-text-v2-moe"),
-        model_name=os.getenv("MODEL_NAME", "qwen2.5:7b"),
+        collection_name=os.getenv("COLLECTION_NAME"),
+        milvus_endpoint=os.getenv("MILVUS_ENDPOINT"),
+        embedding_model=os.getenv("EMBEDDING_MODEL"),
+        model_name=os.getenv("MODEL_NAME"),
         upload_dir=Path(upload_dir_raw),
     )
 

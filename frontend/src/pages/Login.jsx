@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useNavigation} from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 // components
 import PageTitle from "../components/PageTitle";
@@ -15,6 +15,7 @@ import { CircularProgress, LinearProgress  }  from "../components/Progress";
 
 const Login = () => {
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 

@@ -38,3 +38,4 @@ itsdangerous
 pwdlib[argon2]
 httpx
 python-dotenv
+langchain-huggingface 
