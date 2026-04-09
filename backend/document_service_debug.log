@@ -4498,3 +4498,9 @@ pymilvus.exceptions.MilvusException: <MilvusException: (code=0, message=metric t
 2026-04-08 22:40:18,707 - app.services.document_service - DEBUG - Fetching documents list
 2026-04-08 22:40:18,710 - app.services.document_service - INFO - Retrieved 2 documents from database
 2026-04-08 22:40:18,710 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-08 23:24:43,934 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-08 23:24:43,939 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-08 23:24:43,939 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-08 23:24:43,940 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-08 23:24:43,942 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-08 23:24:43,942 - app.services.document_service - DEBUG - Documents serialized successfully
