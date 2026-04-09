@@ -94,6 +94,7 @@ First build takes ~5-10 minutes (downloads ML models ~2.5GB). Open http://localh
 | **Lucide React** | Icon library |
 
 <details>
+<details>
 <summary><b>Infrastructure</b></summary>
 
 | Technology | Purpose |
