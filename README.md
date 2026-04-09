@@ -65,7 +65,6 @@ docker compose up -d
 
 First build takes ~5-10 minutes (downloads ML models ~2.5GB). Open http://localhost:5174
   
-
 # Tech Stack
 
 <details>
@@ -74,11 +73,11 @@ First build takes ~5-10 minutes (downloads ML models ~2.5GB). Open http://localh
 | Technology | Purpose |
 |---|---|
 | **FastAPI** | Async web framework with SSE streaming |
-| **Mongodb** |  NoSQL database for storing application data|
+| **MongoDB** | NoSQL database for application data |
 | **Milvus** | Vector store — cosine similarity |
-| **Docling** | Document parsing — PDF, DOCX, PPTX, HTML with structural extraction (switchable via config) |
-| **sentence-transformers** | BAAI/bge-m3 embeddings + BAAI/bge-reranker-v2-m3 reranking |
-| **ollama** | Local LLM — tool calling via prompt tags, multimodal support |
+| **Docling** | Document parsing — PDF, DOCX, PPTX, HTML with structural extraction |
+| **sentence-transformers** | BGE embeddings + reranking |
+| **Ollama** | Local LLM — tool calling, multimodal support |
 
 </details>
 
@@ -87,21 +86,22 @@ First build takes ~5-10 minutes (downloads ML models ~2.5GB). Open http://localh
 
 | Technology | Purpose |
 |---|---|
-| **React 19*** | UI framework with strict typing |
-| **Vite 7** | Dev server and production bundler |
-| **TailwindCSS 4** | Utility-first styling with dark / light theme |
-| **Framer Motion 12** | Layout animations, transitions, staggered entrances |
+| **React 19** | UI framework |
+| **Vite** | Dev server and bundler |
+| **Tailwind CSS** | Utility-first styling with theming |
+| **Framer Motion** | Animations and transitions |
 | **Lucide React** | Icon library |
 
-<details>
+</details>
+
 <details>
 <summary><b>Infrastructure</b></summary>
 
 | Technology | Purpose |
 |---|---|
-| **MongoDB** | Document metadata, chat history, users |
-| **Milvus** | Vector embeddings (HTTP client, containerized) |
-| **Docker Compose** | Full-stack deployment (4 containers) |
-| **nginx** | Production frontend serving + API/SSE reverse proxy |
+| **MongoDB** | Stores users, chat history, metadata |
+| **Milvus** | Vector embeddings storage |
+| **Docker Compose** | Container orchestration |
+| **Nginx** | Reverse proxy and frontend serving |
 
 </details>
