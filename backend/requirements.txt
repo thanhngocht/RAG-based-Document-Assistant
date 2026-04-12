@@ -1,17 +1,12 @@
 ollama
-pdfplumber 
 langchain 
 langchain-core
 langchain-ollama
 langchain-community
 langchain_text_splitters
-unstructured
-unstructured[all-docs]
-fastembed
-pikepdf
+
 sentence-transformers
-elevenlabs
-streamlit
+
 python-docx
 langchain_classic
 langchain-docling
@@ -20,7 +15,6 @@ pymilvus
 easyocr
 
 fastapi
-starlette
 python-multipart
 uvicorn[standard]
 
@@ -39,3 +33,4 @@ pwdlib[argon2]
 httpx
 python-dotenv
 langchain-huggingface 
+langfuse

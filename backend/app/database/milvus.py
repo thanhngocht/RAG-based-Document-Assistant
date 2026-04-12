@@ -1,4 +1,5 @@
 from functools import lru_cache
+from datetime import datetime
 
 import ollama
 from langchain_milvus import BM25BuiltInFunction, Milvus
@@ -59,26 +60,26 @@ def get_vectorstore() -> Milvus:
     client = get_milvus_client()
     collection_name = settings.collection_name
 
-    # vectorstore = Milvus(
-    #     embedding_function=get_embeddings(),
-    #     collection_name=collection_name,
-    #     connection_args={"uri": settings.milvus_endpoint},
-    #     vector_field=["dense", "sparse"],
-    #     builtin_function=BM25BuiltInFunction(),
-    #     text_field="text",  
-    #     enable_dynamic_field=True,  
-    # )
     vectorstore = Milvus(
         embedding_function=get_embeddings(),
         collection_name=collection_name,
         connection_args={"uri": settings.milvus_endpoint},
-        index_params={
-            "index_type": "FLAT",
-            "metric_type": "COSINE",
-        },
+        vector_field=["dense", "sparse"],
+        builtin_function=BM25BuiltInFunction(),
+        # text_field="text",  
+        # enable_dynamic_field=True,  
+    )
+    # vectorstore = Milvus(
+    #     embedding_function=get_embeddings(),
+    #     collection_name=collection_name,
+    #     connection_args={"uri": settings.milvus_endpoint},
+    #     index_params={
+    #         "index_type": "FLAT",
+    #         "metric_type": "COSINE",
+    #     },
     
 
-    )
+    # )
 
     # ✅ SAFE INIT - Create with sample document containing metadata
     if not client.has_collection(collection_name):
@@ -93,7 +94,10 @@ def get_vectorstore() -> Milvus:
                     "page": 1,
                     "chunk_id": 0,
                     "document_id": "init",
-                    "heading": ""
+                    "uploaded_by": "",
+                    "heading": "",
+                    "effective_day": "",
+                    "expired_day": "",
                 }
             )
             vectorstore.add_documents([sample_doc])
@@ -131,7 +135,7 @@ def reset_vectorstore() -> None:
 
 
 # 5.Retriever
-from langchain_huggingface import HuggingFaceEndpoint
+
 
 from langchain_classic.retrievers import ContextualCompressionRetriever
 from langchain_classic.retrievers.document_compressors import CrossEncoderReranker
@@ -140,27 +144,45 @@ from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 # from langchain.vectorstores.contextual_compression import ContextualCompressionRetriever
 # from langchain.retrievers.document_compressors import CrossEncoderReranker
 
-def create_retriever():
-    vectorstore = get_vectorstore()
-    base_retriever = vectorstore.as_retriever(search_kwargs={"k":10})
-    re_ranker = CrossEncoderReranker(
-        model = HuggingFaceCrossEncoder(model_name="BAAI/bge-reranker-v2-m3"),
-        top_n=5
+# def create_retriever():
+#     vectorstore = get_vectorstore()
+#     base_retriever = vectorstore.as_retriever(search_kwargs={"k":10})
+#     re_ranker = CrossEncoderReranker(
+#         model = HuggingFaceCrossEncoder(model_name="BAAI/bge-reranker-v2-m3"),
+#         top_n=5
                                      
+#     )
+
+#     cross_encoder_reranker_retriever = ContextualCompressionRetriever(
+#         base_compressor = re_ranker,
+#         base_retriever = base_retriever,
+#     )
+#     return cross_encoder_reranker_retriever
+
+def create_retriever(k=5, dense_weight=0.6, sparse_weight=0.4):
+    vectorstore =get_vectorstore()
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    return vectorstore.as_retriever(
+        search_kwargs={
+            "k": k,
+            "fetch_k": 20,
+            "ranker_type": "weighted",
+            "ranker_params": {"weights": [dense_weight, sparse_weight]},
+            "expr": f'expired_day is null or expired_day == "" or expired_day > "{today}"',
+        
+        }
     )
-    # return vectorstore.as_retriever(
-    #     search_kwargs={
-    #         "k": k,
-    #         "fetch_k": 20,
-    #         "ranker_type": "weighted",
-    #         "ranker_params": {"weights": [dense_weight, sparse_weight]},
-    #     }
-    # )
-    cross_encoder_reranker_retriever = ContextualCompressionRetriever(
-        base_compressor = re_ranker,
-        base_retriever = base_retriever,
-    )
-    return cross_encoder_reranker_retriever
+# def create_retriever(k=5):
+#     vectorstore =get_vectorstore()
+#     return vectorstore.as_retriever(
+#         search_kwargs={
+#             "k": k,
+#             "ranker_type": "rrf",
+#             "ranker_params":{"k": 100},
+           
+#         }
+#     )
+#https://milvus.io/docs/milvus_hybrid_search_retriever.md
 if __name__ == "__main__":
     vs = get_vectorstore()
     print(vs.__dict__)

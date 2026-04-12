@@ -1,5 +1,6 @@
 import shutil
 import logging
+from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
 from typing import List
@@ -36,7 +37,9 @@ from app.daos.document_dao import (
     serialize_document,
     update_document,
 )
+from app.daos.user_dao import find_user_by_id
 from app.database.milvus import get_milvus_client, get_vectorstore, get_embeddings
+from app.schemas.document_schema import DocumentDatesUpdateRequest
 
 # Configure logger - only for this module
 logger = logging.getLogger(__name__)
@@ -55,13 +58,9 @@ console_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
-# Suppress debug logs from other libraries
-logging.getLogger('pymongo').setLevel(logging.WARNING)
-logging.getLogger('urllib3').setLevel(logging.WARNING)
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-logging.getLogger('docling').setLevel(logging.INFO)
 
-def build_converter(use_ocr=False, use_table=False, lang="vi"):  # ✅ Disabled by default for speed
+
+def build_converter(use_ocr=True, use_table=True, lang="vi"): 
     logger.debug(f"Building converter with use_ocr={use_ocr}, use_table={use_table}, lang={lang}")
     pipeline_options = PdfPipelineOptions()
     pipeline_options.do_ocr = use_ocr
@@ -93,7 +92,7 @@ def build_converter(use_ocr=False, use_table=False, lang="vi"):  # ✅ Disabled 
     logger.info("Converter built successfully")
     return converter
 
-ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc", ".txt"}
+ALLOWED_EXTENSIONS = {".pdf", ".docx"}
 
 
 
@@ -169,7 +168,8 @@ def clean_metadata(doc, index, file_path: Path):
         "filename": original_name,  # Clean filename without UUID prefix
         "chunk_id": index,
         "page": page,
-        "heading": heading
+        "heading": heading,
+        
     }
 
 
@@ -181,7 +181,30 @@ def clean_metadata(doc, index, file_path: Path):
 #     return len(chunks)
 
 # 2.Ingest
-def _ingest_file(file_path: Path, document_id: str) -> int:
+def _validate_document_dates(effective_day: str | None, expired_day: str | None) -> None:
+    if effective_day:
+        try:
+            datetime.strptime(effective_day, "%Y-%m-%d")
+        except ValueError:
+            raise HTTPException(400, "effective_day phải có định dạng YYYY-MM-DD")
+
+    if expired_day:
+        try:
+            datetime.strptime(expired_day, "%Y-%m-%d")
+        except ValueError:
+            raise HTTPException(400, "expired_day phải có định dạng YYYY-MM-DD")
+
+    if effective_day and expired_day and effective_day > expired_day:
+        raise HTTPException(400, "effective_day phải nhỏ hơn hoặc bằng expired_day")
+
+
+def _ingest_file(
+    file_path: Path,
+    document_id: str,
+    uploaded_by: str,
+    effective_day: str | None,
+    expired_day: str | None,
+) -> int:
     logger.info(f"Starting ingestion for document_id: {document_id}, file: {file_path}")
     
     try:
@@ -192,6 +215,10 @@ def _ingest_file(file_path: Path, document_id: str) -> int:
         # ✅ thêm document_id để delete/query
         for i, chunk in enumerate(chunks):
             chunk.metadata["document_id"] = document_id
+            
+            chunk.metadata["uploaded_by"] = uploaded_by
+            chunk.metadata["effective_day"] = effective_day or ""
+            chunk.metadata["expired_day"] = expired_day or ""
         logger.debug(f"Added document_id to all {len(chunks)} chunk metadata")
 
         logger.debug("Getting Milvus client")
@@ -217,7 +244,12 @@ def _ingest_file(file_path: Path, document_id: str) -> int:
         raise
 
 # 3.Single file
-async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
+async def save_and_ingest_document(
+    file: UploadFile,
+    uploaded_by: str,
+    effective_day: str | None = None,
+    expired_day: str | None = None,
+) -> dict:
     logger.info(f"Starting save_and_ingest_document for file uploaded by: {uploaded_by}")
     
     filename = file.filename or ""
@@ -228,6 +260,8 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
     if extension not in ALLOWED_EXTENSIONS:
         logger.warning(f"Invalid file extension: {extension}. Allowed: {ALLOWED_EXTENSIONS}")
         raise HTTPException(400, "Chỉ hỗ trợ PDF/TXT/DOC/DOCX")
+
+    _validate_document_dates(effective_day, expired_day)
 
     logger.debug(f"Creating upload directory: {settings.upload_dir}")
     settings.upload_dir.mkdir(parents=True, exist_ok=True)
@@ -259,6 +293,8 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
             "uploaded_by": uploaded_by,
             "status": "processing",
             "file_size": file_size,
+            "effective_day": effective_day or "",
+            "expired_day": expired_day or "",
         }
     )
     
@@ -268,7 +304,7 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
     try:
         # ✅ 2. ingest
         logger.info(f"Starting ingestion for document_id: {doc_id}")
-        chunk_count = _ingest_file(destination, doc_id)
+        chunk_count = _ingest_file(destination, doc_id, uploaded_by, effective_day, expired_day)
         logger.info(f"Ingestion completed: {chunk_count} chunks")
 
         # ✅ 3. update success
@@ -306,6 +342,8 @@ async def save_and_ingest_document(file: UploadFile, uploaded_by: str) -> dict:
 async def save_multiple_documents(
     files: List[UploadFile],
     uploaded_by: str,
+    effective_day: str | None = None,
+    expired_day: str | None = None,
 ) -> list[dict]:
     logger.info(f"Starting save_multiple_documents: {len(files)} files, uploaded_by: {uploaded_by}")
     
@@ -314,7 +352,7 @@ async def save_multiple_documents(
     for idx, file in enumerate(files):
         logger.debug(f"Processing file {idx + 1}/{len(files)}: {file.filename}")
         try:
-            result = await save_and_ingest_document(file, uploaded_by)
+            result = await save_and_ingest_document(file, uploaded_by, effective_day, expired_day)
             results.append(result)
             logger.debug(f"File {idx + 1} processed successfully")
         except Exception as e:
@@ -325,6 +363,95 @@ async def save_multiple_documents(
     return results
 
 
+def _upsert_document_dates_by_document_id(
+    document_id: str,
+    effective_day: str,
+    expired_day: str,
+) -> int:
+    client = get_milvus_client()
+    rows = client.query(
+        collection_name=settings.collection_name,
+        filter=f'document_id == "{document_id}"',
+        output_fields=["pk"],
+        limit=16384,
+    )
+    if not rows:
+        return 0
+
+    upsert_data = [
+        {
+            "pk": row["pk"],
+            "effective_day": effective_day,
+            "expired_day": expired_day,
+        }
+        for row in rows
+        if "pk" in row
+    ]
+    if not upsert_data:
+        return 0
+
+    try:
+        client.upsert(
+            collection_name=settings.collection_name,
+            data=upsert_data,
+            partial_update=True,
+        )
+    except TypeError as exc:
+        raise RuntimeError("Milvus client không hỗ trợ partial_update=True") from exc
+    return len(upsert_data)
+
+
+async def update_document_dates(document_id: str, payload: DocumentDatesUpdateRequest) -> dict:
+    logger.info(f"Updating document dates for document_id: {document_id}")
+    effective_day = payload.effective_day or ""
+    expired_day = payload.expired_day or ""
+    _validate_document_dates(effective_day, expired_day)
+
+    document = await find_document_by_id(document_id)
+    if not document:
+        raise HTTPException(404, "Không tìm thấy tài liệu")
+
+    chunk_count = int(document.get("chunk_count", 0))
+    try:
+        updated_count = _upsert_document_dates_by_document_id(document_id, effective_day, expired_day)
+        if updated_count > 0:
+            chunk_count = updated_count
+    except RuntimeError:
+        # Fallback khi Milvus/PyMilvus chưa hỗ trợ partial_update=True
+        source_path = Path(document["source_path"])
+        if not source_path.is_absolute():
+            source_path = settings.upload_dir.parent / source_path
+
+        if not source_path.exists():
+            raise HTTPException(404, "File không tồn tại trên server")
+
+        uploaded_by = document.get("uploaded_by", "")
+        vectorstore = get_vectorstore()
+        vectorstore.delete(expr=f'document_id == "{document_id}"')
+        chunk_count = _ingest_file(source_path, document_id, uploaded_by, effective_day, expired_day)
+    except Exception as exc:
+        await update_document(
+            document_id,
+            {
+                "status": "failed",
+                "error_message": str(exc),
+            },
+        )
+        raise HTTPException(500, f"Không thể cập nhật metadata: {exc}")
+
+    updated = await update_document(
+        document_id,
+        {
+            "effective_day": effective_day,
+            "expired_day": expired_day,
+            "chunk_count": chunk_count,
+            "status": "done",
+            "error_message": "",
+        },
+    )
+    return serialize_document(updated)
+
+
 # GET LIST
 async def get_documents() -> list[dict]:
     logger.debug("Fetching documents list")
@@ -332,6 +459,14 @@ async def get_documents() -> list[dict]:
         docs = await list_documents()
         logger.info(f"Retrieved {len(docs)} documents from database")
         serialized = [serialize_document(doc) for doc in docs]
+
+        for doc in serialized:
+            uploader = doc.get("uploaded_by", "")
+            if len(uploader) == 24:
+                user = await find_user_by_id(uploader)
+                if user and user.get("username"):
+                    doc["uploaded_by"] = user["username"]
+
         logger.debug("Documents serialized successfully")
         return serialized
     except Exception as e:

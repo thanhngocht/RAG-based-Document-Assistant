@@ -60,3 +60,18 @@ export const deleteDocument = async (documentId) => {
     throw error;
   }
 };
+
+/**
+ * Cập nhật ngày hiệu lực/ngày hết hạn của document (Admin only)
+ * @param {string} documentId - ID của document
+ * @param {{ effective_day: string, expired_day: string }} payload
+ * @returns {Promise} Response với document đã cập nhật
+ */
+export const updateDocumentDates = async (documentId, payload) => {
+  try {
+    const response = await api.patch(`/admin/documents/${documentId}/dates`, payload);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

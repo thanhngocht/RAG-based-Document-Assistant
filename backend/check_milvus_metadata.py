@@ -29,7 +29,17 @@ if client.has_collection(collection_name):
     results = client.query(
         collection_name=collection_name,
         filter="",  # No filter = get all
-        output_fields=["text", "filename", "page", "heading", "document_id", "chunk_id"],
+        output_fields=[
+            "text",
+            "filename",
+            "page",
+            "heading",
+            "document_id",
+            "uploaded_by",
+            "effective_day",
+            "expired_day",
+            "chunk_id",
+        ],
         limit=2
     )
     
@@ -41,6 +51,9 @@ if client.has_collection(collection_name):
             print(f"  Page: {doc.get('page', 'N/A')}")
             print(f"  Heading: {doc.get('heading', 'N/A')}")
             print(f"  Document ID: {doc.get('document_id', 'N/A')}")
+            print(f"  Uploaded by: {doc.get('uploaded_by', 'N/A')}")
+            print(f"  Effective day: {doc.get('effective_day', 'N/A')}")
+            print(f"  Expired day: {doc.get('expired_day', 'N/A')}")
             print(f"  Chunk ID: {doc.get('chunk_id', 'N/A')}")
             print()
     else:

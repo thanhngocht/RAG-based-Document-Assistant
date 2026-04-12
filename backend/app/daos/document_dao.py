@@ -17,6 +17,8 @@ def serialize_document(document: dict) -> dict:
         "chunk_count": document.get("chunk_count", 0),
         "error_message": document.get("error_message", ""),
         "file_size": document.get("file_size", 0),
+        "effective_day": document.get("effective_day", ""),
+        "expired_day": document.get("expired_day", ""),
     }
 
 

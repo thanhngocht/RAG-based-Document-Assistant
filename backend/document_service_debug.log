@@ -4504,3 +4504,783 @@ pymilvus.exceptions.MilvusException: <MilvusException: (code=0, message=metric t
 2026-04-08 23:24:43,940 - app.services.document_service - DEBUG - Fetching documents list
 2026-04-08 23:24:43,942 - app.services.document_service - INFO - Retrieved 2 documents from database
 2026-04-08 23:24:43,942 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 22:51:10,472 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 22:51:10,475 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-10 22:51:10,475 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 22:51:10,482 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 22:51:10,484 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-10 22:51:10,484 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 22:51:26,448 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: 69d91bac1b79c5243e879517
+2026-04-10 22:51:26,448 - app.services.document_service - DEBUG - Processing file 1/1: Luật-109-2025-QH15.pdf
+2026-04-10 22:51:26,448 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-10 22:51:26,448 - app.services.document_service - DEBUG - Processing file: Luật-109-2025-QH15.pdf
+2026-04-10 22:51:26,448 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-10 22:51:26,449 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-10 22:51:26,449 - app.services.document_service - DEBUG - Destination path: uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-10 22:51:26,449 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-10 22:51:26,454 - app.services.document_service - INFO - File saved successfully to: uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-10 22:51:26,454 - app.services.document_service - DEBUG - File size: 6923249 bytes
+2026-04-10 22:51:26,454 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-10 22:51:26,470 - app.services.document_service - INFO - Document created with ID: 69d91c7e1b79c5243e879518
+2026-04-10 22:51:26,470 - app.services.document_service - INFO - Starting ingestion for document_id: 69d91c7e1b79c5243e879518
+2026-04-10 22:51:26,470 - app.services.document_service - INFO - Starting ingestion for document_id: 69d91c7e1b79c5243e879518, file: uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-10 22:51:26,471 - app.services.document_service - INFO - Starting to load document from: uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-10 22:51:26,471 - app.services.document_service - DEBUG - File exists: True, File size: 6923249 bytes
+2026-04-10 22:51:26,490 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-10 22:51:48,705 - app.services.document_service - INFO - Successfully loaded 31 chunks from uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-10 22:51:48,706 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 101.583664, 't': 746.758830455, 'r': 142.380473884, 'b': 734.6948686549999, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 8]}]}, {'self_ref': '#/texts/3', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 150.5, 't': 747.1975914999999, 'r': 234.17306206499993, 'b': 734.8300288600288, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 14]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 15661522117956304264, 'filename': '7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf'}}}
+2026-04-10 22:51:48,706 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-10 22:51:48,706 - app.services.document_service - INFO - Metadata added to all 31 chunks
+2026-04-10 22:51:48,706 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf', 'filename': 'Luật-109-2025-QH15.pdf', 'chunk_id': 0, 'page': 1, 'heading': ''}
+2026-04-10 22:51:48,710 - app.services.document_service - DEBUG - Loaded 31 chunks for ingestion
+2026-04-10 22:51:48,710 - app.services.document_service - DEBUG - Added document_id to all 31 chunk metadata
+2026-04-10 22:51:48,710 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-10 22:51:48,776 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-10 22:52:01,540 - app.services.document_service - INFO - Adding 31 documents to vectorstore
+2026-04-10 22:52:02,064 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-10 22:52:02,447 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-10 22:52:02,704 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-10 22:52:02,889 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-10 22:52:03,129 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-10 22:52:03,334 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-10 22:52:03,448 - app.services.document_service - INFO - Added batch 30-31 chunks
+2026-04-10 22:52:03,448 - app.services.document_service - INFO - Successfully ingested 31 chunks for document_id: 69d91c7e1b79c5243e879518
+2026-04-10 22:52:03,448 - app.services.document_service - INFO - Ingestion completed: 31 chunks
+2026-04-10 22:52:03,448 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d91c7e1b79c5243e879518
+2026-04-10 22:52:03,455 - app.services.document_service - INFO - Document 69d91c7e1b79c5243e879518 processed successfully
+2026-04-10 22:52:03,456 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-10 22:52:03,456 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-10 22:52:03,473 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 22:52:03,478 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-10 22:52:03,478 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 22:52:10,955 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 22:52:10,957 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-10 22:52:10,957 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 22:52:10,961 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 22:52:10,964 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-10 22:52:10,964 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 23:32:33,067 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 23:32:33,073 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-10 23:32:33,073 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 23:41:16,729 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 23:41:16,740 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-10 23:41:16,740 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 23:41:16,744 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 23:41:16,747 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-10 23:41:16,747 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 23:42:01,552 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: 69d91bac1b79c5243e879517
+2026-04-10 23:42:01,552 - app.services.document_service - DEBUG - Processing file 1/1: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:01,552 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-10 23:42:01,553 - app.services.document_service - DEBUG - Processing file: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:01,553 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-10 23:42:01,553 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-10 23:42:01,553 - app.services.document_service - DEBUG - Destination path: uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:01,553 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-10 23:42:01,554 - app.services.document_service - INFO - File saved successfully to: uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:01,554 - app.services.document_service - DEBUG - File size: 1297982 bytes
+2026-04-10 23:42:01,554 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-10 23:42:01,556 - app.services.document_service - INFO - Document created with ID: 69d9285946b5675498d6aee2
+2026-04-10 23:42:01,556 - app.services.document_service - INFO - Starting ingestion for document_id: 69d9285946b5675498d6aee2
+2026-04-10 23:42:01,556 - app.services.document_service - INFO - Starting ingestion for document_id: 69d9285946b5675498d6aee2, file: uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:01,556 - app.services.document_service - INFO - Starting to load document from: uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:01,556 - app.services.document_service - DEBUG - File exists: True, File size: 1297982 bytes
+2026-04-10 23:42:01,567 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:07,929 - app.services.document_service - INFO - Successfully loaded 9 chunks from uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-10 23:42:07,930 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/1', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397472251257, 't': 731.9199826700426, 'r': 226.1533192049345, 'b': 715.8647509398993, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 21]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 3680910516236496801, 'filename': '51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf'}}}
+2026-04-10 23:42:07,930 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-10 23:42:07,930 - app.services.document_service - INFO - Metadata added to all 9 chunks
+2026-04-10 23:42:07,930 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf', 'filename': 'VanBanGoc_TT.04.2026.TT BCT.pdf', 'chunk_id': 0, 'page': 1, 'heading': '', 'expired_day': '2026-01-01'}
+2026-04-10 23:42:07,932 - app.services.document_service - DEBUG - Loaded 9 chunks for ingestion
+2026-04-10 23:42:07,932 - app.services.document_service - DEBUG - Added document_id to all 9 chunk metadata
+2026-04-10 23:42:07,932 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-10 23:42:07,958 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-10 23:42:12,669 - app.services.document_service - INFO - Adding 9 documents to vectorstore
+2026-04-10 23:42:13,077 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-10 23:42:13,255 - app.services.document_service - INFO - Added batch 5-9 chunks
+2026-04-10 23:42:13,255 - app.services.document_service - INFO - Successfully ingested 9 chunks for document_id: 69d9285946b5675498d6aee2
+2026-04-10 23:42:13,255 - app.services.document_service - INFO - Ingestion completed: 9 chunks
+2026-04-10 23:42:13,255 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d9285946b5675498d6aee2
+2026-04-10 23:42:13,260 - app.services.document_service - INFO - Document 69d9285946b5675498d6aee2 processed successfully
+2026-04-10 23:42:13,260 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-10 23:42:13,260 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-10 23:42:13,271 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 23:42:13,274 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-10 23:42:13,274 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-10 23:50:49,633 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: 69d91bac1b79c5243e879517
+2026-04-10 23:50:49,640 - app.services.document_service - DEBUG - Processing file 1/1: luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:50:49,640 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-10 23:50:49,640 - app.services.document_service - DEBUG - Processing file: luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:50:49,641 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-10 23:50:49,641 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-10 23:50:49,641 - app.services.document_service - DEBUG - Destination path: uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:50:49,641 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-10 23:50:49,643 - app.services.document_service - INFO - File saved successfully to: uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:50:49,643 - app.services.document_service - DEBUG - File size: 1501809 bytes
+2026-04-10 23:50:49,643 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-10 23:50:49,647 - app.services.document_service - INFO - Document created with ID: 69d92a69173aa57ac4910b41
+2026-04-10 23:50:49,648 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92a69173aa57ac4910b41
+2026-04-10 23:50:49,648 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92a69173aa57ac4910b41, file: uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:50:49,648 - app.services.document_service - INFO - Starting to load document from: uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:50:49,648 - app.services.document_service - DEBUG - File exists: True, File size: 1501809 bytes
+2026-04-10 23:50:49,801 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:51:11,541 - app.services.document_service - INFO - Successfully loaded 37 chunks from uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-10 23:51:11,543 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397757767128, 't': 758.4920083463319, 'r': 218.8186154357442, 'b': 743.718789225669, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 22]}]}], 'headings': ['QUỐC HỘI'], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 1072683175175688530, 'filename': '16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf'}}}
+2026-04-10 23:51:11,543 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-10 23:51:11,543 - app.services.document_service - INFO - Metadata added to all 37 chunks
+2026-04-10 23:51:11,543 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf', 'filename': 'luat-134-2025-qh15_2512152052.pdf', 'chunk_id': 0, 'page': 1, 'heading': 'QUỐC HỘI', 'expired_day': ''}
+2026-04-10 23:51:11,546 - app.services.document_service - DEBUG - Loaded 37 chunks for ingestion
+2026-04-10 23:51:11,546 - app.services.document_service - DEBUG - Added document_id to all 37 chunk metadata
+2026-04-10 23:51:11,546 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-10 23:51:11,562 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-10 23:51:11,692 - app.services.document_service - INFO - Adding 37 documents to vectorstore
+2026-04-10 23:51:14,252 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-10 23:51:14,649 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-10 23:51:14,989 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-10 23:51:15,386 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-10 23:51:15,741 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-10 23:51:16,071 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-10 23:51:16,307 - app.services.document_service - INFO - Added batch 30-35 chunks
+2026-04-10 23:51:16,436 - app.services.document_service - INFO - Added batch 35-37 chunks
+2026-04-10 23:51:16,436 - app.services.document_service - INFO - Successfully ingested 37 chunks for document_id: 69d92a69173aa57ac4910b41
+2026-04-10 23:51:16,436 - app.services.document_service - INFO - Ingestion completed: 37 chunks
+2026-04-10 23:51:16,436 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d92a69173aa57ac4910b41
+2026-04-10 23:51:16,442 - app.services.document_service - INFO - Document 69d92a69173aa57ac4910b41 processed successfully
+2026-04-10 23:51:16,442 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-10 23:51:16,442 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-10 23:51:16,462 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-10 23:51:16,465 - app.services.document_service - INFO - Retrieved 3 documents from database
+2026-04-10 23:51:16,465 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:02:22,320 - app.services.document_service - INFO - Starting save_multiple_documents: 2 files, uploaded_by: 69d91bac1b79c5243e879517
+2026-04-11 00:02:22,324 - app.services.document_service - DEBUG - Processing file 1/2: Luật-109-2025-QH15.pdf
+2026-04-11 00:02:22,324 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-11 00:02:22,324 - app.services.document_service - DEBUG - Processing file: Luật-109-2025-QH15.pdf
+2026-04-11 00:02:22,324 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 00:02:22,324 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 00:02:22,325 - app.services.document_service - DEBUG - Destination path: uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:02:22,325 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 00:02:22,333 - app.services.document_service - INFO - File saved successfully to: uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:02:22,333 - app.services.document_service - DEBUG - File size: 6923249 bytes
+2026-04-11 00:02:22,333 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 00:02:22,337 - app.services.document_service - INFO - Document created with ID: 69d92d1e7516525b3118ebc2
+2026-04-11 00:02:22,337 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92d1e7516525b3118ebc2
+2026-04-11 00:02:22,337 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92d1e7516525b3118ebc2, file: uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:02:22,337 - app.services.document_service - INFO - Starting to load document from: uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:02:22,337 - app.services.document_service - DEBUG - File exists: True, File size: 6923249 bytes
+2026-04-11 00:02:22,545 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:02:40,111 - app.services.document_service - INFO - Successfully loaded 31 chunks from uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:02:40,112 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 101.583664, 't': 746.758830455, 'r': 142.380473884, 'b': 734.6948686549999, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 8]}]}, {'self_ref': '#/texts/3', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 150.5, 't': 747.1975914999999, 'r': 234.17306206499993, 'b': 734.8300288600288, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 14]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 15661522117956304264, 'filename': '274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf'}}}
+2026-04-11 00:02:40,112 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 00:02:40,112 - app.services.document_service - INFO - Metadata added to all 31 chunks
+2026-04-11 00:02:40,112 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf', 'filename': 'Luật-109-2025-QH15.pdf', 'chunk_id': 0, 'page': 1, 'heading': '', 'expired_day': ''}
+2026-04-11 00:02:40,115 - app.services.document_service - DEBUG - Loaded 31 chunks for ingestion
+2026-04-11 00:02:40,115 - app.services.document_service - DEBUG - Added document_id to all 31 chunk metadata
+2026-04-11 00:02:40,116 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 00:02:40,129 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 00:02:44,910 - app.services.document_service - INFO - Adding 31 documents to vectorstore
+2026-04-11 00:02:45,145 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 00:02:45,464 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 00:02:45,701 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 00:02:45,883 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 00:02:46,084 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 00:02:46,256 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 00:02:46,368 - app.services.document_service - INFO - Added batch 30-31 chunks
+2026-04-11 00:02:46,368 - app.services.document_service - INFO - Successfully ingested 31 chunks for document_id: 69d92d1e7516525b3118ebc2
+2026-04-11 00:02:46,368 - app.services.document_service - INFO - Ingestion completed: 31 chunks
+2026-04-11 00:02:46,369 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d92d1e7516525b3118ebc2
+2026-04-11 00:02:46,379 - app.services.document_service - INFO - Document 69d92d1e7516525b3118ebc2 processed successfully
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - Processing file 2/2: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:02:46,380 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - Processing file: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - Destination path: uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:02:46,380 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 00:02:46,382 - app.services.document_service - INFO - File saved successfully to: uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:02:46,382 - app.services.document_service - DEBUG - File size: 1501809 bytes
+2026-04-11 00:02:46,382 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 00:02:46,385 - app.services.document_service - INFO - Document created with ID: 69d92d367516525b3118ebc3
+2026-04-11 00:02:46,385 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92d367516525b3118ebc3
+2026-04-11 00:02:46,385 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92d367516525b3118ebc3, file: uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:02:46,385 - app.services.document_service - INFO - Starting to load document from: uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:02:46,385 - app.services.document_service - DEBUG - File exists: True, File size: 1501809 bytes
+2026-04-11 00:02:46,402 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:03:07,945 - app.services.document_service - INFO - Successfully loaded 37 chunks from uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:03:07,948 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397757767128, 't': 758.4920083463319, 'r': 218.8186154357442, 'b': 743.718789225669, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 22]}]}], 'headings': ['QUỐC HỘI'], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 1072683175175688530, 'filename': '1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf'}}}
+2026-04-11 00:03:07,948 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 00:03:07,948 - app.services.document_service - INFO - Metadata added to all 37 chunks
+2026-04-11 00:03:07,948 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf', 'filename': 'luat-134-2025-qh15_2512152052.pdf', 'chunk_id': 0, 'page': 1, 'heading': 'QUỐC HỘI', 'expired_day': ''}
+2026-04-11 00:03:07,950 - app.services.document_service - DEBUG - Loaded 37 chunks for ingestion
+2026-04-11 00:03:07,950 - app.services.document_service - DEBUG - Added document_id to all 37 chunk metadata
+2026-04-11 00:03:07,950 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 00:03:07,951 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 00:03:07,951 - app.services.document_service - INFO - Adding 37 documents to vectorstore
+2026-04-11 00:03:08,259 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 00:03:08,636 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 00:03:08,979 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 00:03:09,371 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 00:03:09,709 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 00:03:10,020 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 00:03:10,245 - app.services.document_service - INFO - Added batch 30-35 chunks
+2026-04-11 00:03:10,359 - app.services.document_service - INFO - Added batch 35-37 chunks
+2026-04-11 00:03:10,359 - app.services.document_service - INFO - Successfully ingested 37 chunks for document_id: 69d92d367516525b3118ebc3
+2026-04-11 00:03:10,359 - app.services.document_service - INFO - Ingestion completed: 37 chunks
+2026-04-11 00:03:10,359 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d92d367516525b3118ebc3
+2026-04-11 00:03:10,370 - app.services.document_service - INFO - Document 69d92d367516525b3118ebc3 processed successfully
+2026-04-11 00:03:10,371 - app.services.document_service - DEBUG - File 2 processed successfully
+2026-04-11 00:03:10,371 - app.services.document_service - INFO - Completed processing 2 files
+2026-04-11 00:03:10,397 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:03:10,399 - app.services.document_service - INFO - Retrieved 5 documents from database
+2026-04-11 00:03:10,399 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:06:51,371 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:06:51,379 - app.services.document_service - INFO - Retrieved 5 documents from database
+2026-04-11 00:06:51,379 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:06:51,383 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:06:51,385 - app.services.document_service - INFO - Retrieved 5 documents from database
+2026-04-11 00:06:51,385 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:06:54,893 - app.services.document_service - INFO - Starting document removal for document_id: 69d91c7e1b79c5243e879518
+2026-04-11 00:06:54,893 - app.services.document_service - DEBUG - Finding document with ID: 69d91c7e1b79c5243e879518
+2026-04-11 00:06:54,895 - app.services.document_service - DEBUG - Document found: Luật-109-2025-QH15.pdf
+2026-04-11 00:06:54,895 - app.services.document_service - DEBUG - Getting vectorstore for deletion
+2026-04-11 00:06:57,022 - app.services.document_service - INFO - Deleting embeddings for document_id: 69d91c7e1b79c5243e879518
+2026-04-11 00:06:57,039 - app.services.document_service - INFO - Embeddings deleted successfully for document_id: 69d91c7e1b79c5243e879518
+2026-04-11 00:06:57,039 - app.services.document_service - DEBUG - Deleting document record from database: 69d91c7e1b79c5243e879518
+2026-04-11 00:06:57,042 - app.services.document_service - DEBUG - Deleting local file: uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-11 00:06:57,042 - app.services.document_service - INFO - Local file deleted successfully: uploads/7f8ba0e021e741449eddb5d94dadf4a7_Luật-109-2025-QH15.pdf
+2026-04-11 00:06:57,043 - app.services.document_service - INFO - Document 69d91c7e1b79c5243e879518 removed successfully
+2026-04-11 00:06:57,313 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:06:57,316 - app.services.document_service - INFO - Retrieved 4 documents from database
+2026-04-11 00:06:57,317 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:06:57,321 - app.services.document_service - INFO - Starting document removal for document_id: 69d92d367516525b3118ebc3
+2026-04-11 00:06:57,321 - app.services.document_service - DEBUG - Finding document with ID: 69d92d367516525b3118ebc3
+2026-04-11 00:06:57,324 - app.services.document_service - DEBUG - Document found: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:06:57,324 - app.services.document_service - DEBUG - Getting vectorstore for deletion
+2026-04-11 00:06:57,324 - app.services.document_service - INFO - Deleting embeddings for document_id: 69d92d367516525b3118ebc3
+2026-04-11 00:06:57,440 - app.services.document_service - INFO - Embeddings deleted successfully for document_id: 69d92d367516525b3118ebc3
+2026-04-11 00:06:57,440 - app.services.document_service - DEBUG - Deleting document record from database: 69d92d367516525b3118ebc3
+2026-04-11 00:06:57,441 - app.services.document_service - DEBUG - Deleting local file: uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:06:57,443 - app.services.document_service - INFO - Local file deleted successfully: uploads/1674b8bf1d5b4d09beeb4af9c222011b_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:06:57,443 - app.services.document_service - INFO - Document 69d92d367516525b3118ebc3 removed successfully
+2026-04-11 00:06:57,448 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:06:57,450 - app.services.document_service - INFO - Retrieved 3 documents from database
+2026-04-11 00:06:57,450 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:06:59,296 - app.services.document_service - INFO - Starting document removal for document_id: 69d92d1e7516525b3118ebc2
+2026-04-11 00:06:59,296 - app.services.document_service - DEBUG - Finding document with ID: 69d92d1e7516525b3118ebc2
+2026-04-11 00:06:59,299 - app.services.document_service - DEBUG - Document found: Luật-109-2025-QH15.pdf
+2026-04-11 00:06:59,299 - app.services.document_service - DEBUG - Getting vectorstore for deletion
+2026-04-11 00:06:59,299 - app.services.document_service - INFO - Deleting embeddings for document_id: 69d92d1e7516525b3118ebc2
+2026-04-11 00:06:59,441 - app.services.document_service - INFO - Embeddings deleted successfully for document_id: 69d92d1e7516525b3118ebc2
+2026-04-11 00:06:59,441 - app.services.document_service - DEBUG - Deleting document record from database: 69d92d1e7516525b3118ebc2
+2026-04-11 00:06:59,443 - app.services.document_service - DEBUG - Deleting local file: uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:06:59,444 - app.services.document_service - INFO - Local file deleted successfully: uploads/274f832bdc584cff90bda25e8eaa63ea_Luật-109-2025-QH15.pdf
+2026-04-11 00:06:59,444 - app.services.document_service - INFO - Document 69d92d1e7516525b3118ebc2 removed successfully
+2026-04-11 00:06:59,448 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:06:59,450 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:06:59,450 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:07:01,582 - app.services.document_service - INFO - Starting document removal for document_id: 69d92a69173aa57ac4910b41
+2026-04-11 00:07:01,582 - app.services.document_service - DEBUG - Finding document with ID: 69d92a69173aa57ac4910b41
+2026-04-11 00:07:01,585 - app.services.document_service - DEBUG - Document found: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:01,585 - app.services.document_service - DEBUG - Getting vectorstore for deletion
+2026-04-11 00:07:01,585 - app.services.document_service - INFO - Deleting embeddings for document_id: 69d92a69173aa57ac4910b41
+2026-04-11 00:07:01,638 - app.services.document_service - INFO - Embeddings deleted successfully for document_id: 69d92a69173aa57ac4910b41
+2026-04-11 00:07:01,639 - app.services.document_service - DEBUG - Deleting document record from database: 69d92a69173aa57ac4910b41
+2026-04-11 00:07:01,641 - app.services.document_service - DEBUG - Deleting local file: uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:01,642 - app.services.document_service - INFO - Local file deleted successfully: uploads/16b6ad7f24604d048c69f652860d012a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:01,642 - app.services.document_service - INFO - Document 69d92a69173aa57ac4910b41 removed successfully
+2026-04-11 00:07:01,650 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:07:01,654 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 00:07:01,654 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:07:04,191 - app.services.document_service - INFO - Starting document removal for document_id: 69d9285946b5675498d6aee2
+2026-04-11 00:07:04,191 - app.services.document_service - DEBUG - Finding document with ID: 69d9285946b5675498d6aee2
+2026-04-11 00:07:04,192 - app.services.document_service - DEBUG - Document found: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:07:04,192 - app.services.document_service - DEBUG - Getting vectorstore for deletion
+2026-04-11 00:07:04,192 - app.services.document_service - INFO - Deleting embeddings for document_id: 69d9285946b5675498d6aee2
+2026-04-11 00:07:04,237 - app.services.document_service - INFO - Embeddings deleted successfully for document_id: 69d9285946b5675498d6aee2
+2026-04-11 00:07:04,238 - app.services.document_service - DEBUG - Deleting document record from database: 69d9285946b5675498d6aee2
+2026-04-11 00:07:04,241 - app.services.document_service - DEBUG - Deleting local file: uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:07:04,242 - app.services.document_service - INFO - Local file deleted successfully: uploads/51d324bcad594982a43892ca2d081ea7_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:07:04,242 - app.services.document_service - INFO - Document 69d9285946b5675498d6aee2 removed successfully
+2026-04-11 00:07:04,247 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:07:04,249 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 00:07:04,249 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:07:17,276 - app.services.document_service - INFO - Starting save_multiple_documents: 2 files, uploaded_by: 69d91bac1b79c5243e879517
+2026-04-11 00:07:17,276 - app.services.document_service - DEBUG - Processing file 1/2: Luật-109-2025-QH15.pdf
+2026-04-11 00:07:17,276 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-11 00:07:17,276 - app.services.document_service - DEBUG - Processing file: Luật-109-2025-QH15.pdf
+2026-04-11 00:07:17,276 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 00:07:17,276 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 00:07:17,276 - app.services.document_service - DEBUG - Destination path: uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf
+2026-04-11 00:07:17,276 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 00:07:17,285 - app.services.document_service - INFO - File saved successfully to: uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf
+2026-04-11 00:07:17,285 - app.services.document_service - DEBUG - File size: 6923249 bytes
+2026-04-11 00:07:17,285 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 00:07:17,289 - app.services.document_service - INFO - Document created with ID: 69d92e45f6e0ef4dea5e4099
+2026-04-11 00:07:17,289 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92e45f6e0ef4dea5e4099
+2026-04-11 00:07:17,289 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92e45f6e0ef4dea5e4099, file: uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf
+2026-04-11 00:07:17,289 - app.services.document_service - INFO - Starting to load document from: uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf
+2026-04-11 00:07:17,289 - app.services.document_service - DEBUG - File exists: True, File size: 6923249 bytes
+2026-04-11 00:07:17,308 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf
+2026-04-11 00:07:34,677 - app.services.document_service - INFO - Successfully loaded 31 chunks from uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf
+2026-04-11 00:07:34,677 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 101.583664, 't': 746.758830455, 'r': 142.380473884, 'b': 734.6948686549999, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 8]}]}, {'self_ref': '#/texts/3', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 150.5, 't': 747.1975914999999, 'r': 234.17306206499993, 'b': 734.8300288600288, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 14]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 15661522117956304264, 'filename': '9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf'}}}
+2026-04-11 00:07:34,678 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 00:07:34,678 - app.services.document_service - INFO - Metadata added to all 31 chunks
+2026-04-11 00:07:34,678 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/9da2faa826bd462494aadc233863dd50_Luật-109-2025-QH15.pdf', 'filename': 'Luật-109-2025-QH15.pdf', 'chunk_id': 0, 'page': 1, 'heading': '', 'expired_day': ''}
+2026-04-11 00:07:34,680 - app.services.document_service - DEBUG - Loaded 31 chunks for ingestion
+2026-04-11 00:07:34,680 - app.services.document_service - DEBUG - Added document_id to all 31 chunk metadata
+2026-04-11 00:07:34,680 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 00:07:34,680 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 00:07:34,680 - app.services.document_service - INFO - Adding 31 documents to vectorstore
+2026-04-11 00:07:34,941 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 00:07:35,286 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 00:07:35,535 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 00:07:35,712 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 00:07:35,917 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 00:07:36,099 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 00:07:36,217 - app.services.document_service - INFO - Added batch 30-31 chunks
+2026-04-11 00:07:36,217 - app.services.document_service - INFO - Successfully ingested 31 chunks for document_id: 69d92e45f6e0ef4dea5e4099
+2026-04-11 00:07:36,218 - app.services.document_service - INFO - Ingestion completed: 31 chunks
+2026-04-11 00:07:36,218 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d92e45f6e0ef4dea5e4099
+2026-04-11 00:07:36,223 - app.services.document_service - INFO - Document 69d92e45f6e0ef4dea5e4099 processed successfully
+2026-04-11 00:07:36,223 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-11 00:07:36,223 - app.services.document_service - DEBUG - Processing file 2/2: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:36,223 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-11 00:07:36,223 - app.services.document_service - DEBUG - Processing file: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:36,223 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 00:07:36,223 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 00:07:36,224 - app.services.document_service - DEBUG - Destination path: uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:36,224 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 00:07:36,227 - app.services.document_service - INFO - File saved successfully to: uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:36,228 - app.services.document_service - DEBUG - File size: 1501809 bytes
+2026-04-11 00:07:36,228 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 00:07:36,231 - app.services.document_service - INFO - Document created with ID: 69d92e58f6e0ef4dea5e409a
+2026-04-11 00:07:36,231 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92e58f6e0ef4dea5e409a
+2026-04-11 00:07:36,231 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92e58f6e0ef4dea5e409a, file: uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:36,231 - app.services.document_service - INFO - Starting to load document from: uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:36,232 - app.services.document_service - DEBUG - File exists: True, File size: 1501809 bytes
+2026-04-11 00:07:36,258 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:56,675 - app.services.document_service - INFO - Successfully loaded 37 chunks from uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 00:07:56,679 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397757767128, 't': 758.4920083463319, 'r': 218.8186154357442, 'b': 743.718789225669, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 22]}]}], 'headings': ['QUỐC HỘI'], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 1072683175175688530, 'filename': '6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf'}}}
+2026-04-11 00:07:56,680 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 00:07:56,680 - app.services.document_service - INFO - Metadata added to all 37 chunks
+2026-04-11 00:07:56,680 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/6d47722f59804df7b9e0b92c1726e70a_luat-134-2025-qh15_2512152052.pdf', 'filename': 'luat-134-2025-qh15_2512152052.pdf', 'chunk_id': 0, 'page': 1, 'heading': 'QUỐC HỘI', 'expired_day': ''}
+2026-04-11 00:07:56,682 - app.services.document_service - DEBUG - Loaded 37 chunks for ingestion
+2026-04-11 00:07:56,682 - app.services.document_service - DEBUG - Added document_id to all 37 chunk metadata
+2026-04-11 00:07:56,682 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 00:07:56,682 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 00:07:56,682 - app.services.document_service - INFO - Adding 37 documents to vectorstore
+2026-04-11 00:07:56,984 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 00:07:57,360 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 00:07:57,787 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 00:07:58,187 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 00:07:58,524 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 00:07:58,843 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 00:07:59,118 - app.services.document_service - INFO - Added batch 30-35 chunks
+2026-04-11 00:07:59,314 - app.services.document_service - INFO - Added batch 35-37 chunks
+2026-04-11 00:07:59,314 - app.services.document_service - INFO - Successfully ingested 37 chunks for document_id: 69d92e58f6e0ef4dea5e409a
+2026-04-11 00:07:59,314 - app.services.document_service - INFO - Ingestion completed: 37 chunks
+2026-04-11 00:07:59,315 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d92e58f6e0ef4dea5e409a
+2026-04-11 00:07:59,339 - app.services.document_service - INFO - Document 69d92e58f6e0ef4dea5e409a processed successfully
+2026-04-11 00:07:59,339 - app.services.document_service - DEBUG - File 2 processed successfully
+2026-04-11 00:07:59,340 - app.services.document_service - INFO - Completed processing 2 files
+2026-04-11 00:07:59,364 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:07:59,371 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:07:59,371 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:09:47,959 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:09:47,963 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:09:47,963 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:09:47,969 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:09:47,971 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:09:47,971 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:09:49,119 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:09:49,122 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:09:49,122 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:09:49,126 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:09:49,128 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:09:49,128 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,245 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,249 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,250 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,255 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,258 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,259 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,410 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,412 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,412 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,416 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,420 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,420 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,646 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,648 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,648 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,650 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,652 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,652 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,879 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,881 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,881 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:05,885 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:05,887 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:05,888 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,112 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,113 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,114 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,116 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,120 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,120 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,401 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,402 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,403 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,404 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,405 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,405 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,563 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,564 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,564 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,568 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,570 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,570 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,777 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,779 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,779 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:06,782 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:06,785 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:06,786 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:35,477 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:35,496 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:35,496 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:35,503 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:10:35,505 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 00:10:35,505 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:10:44,919 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: 69d91bac1b79c5243e879517
+2026-04-11 00:10:44,920 - app.services.document_service - DEBUG - Processing file 1/1: Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:10:44,920 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: 69d91bac1b79c5243e879517
+2026-04-11 00:10:44,920 - app.services.document_service - DEBUG - Processing file: Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:10:44,920 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 00:10:44,920 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 00:10:44,920 - app.services.document_service - DEBUG - Destination path: uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:10:44,920 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 00:10:44,922 - app.services.document_service - INFO - File saved successfully to: uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:10:44,922 - app.services.document_service - DEBUG - File size: 1522016 bytes
+2026-04-11 00:10:44,922 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 00:10:44,927 - app.services.document_service - INFO - Document created with ID: 69d92f14f6e0ef4dea5e409b
+2026-04-11 00:10:44,927 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92f14f6e0ef4dea5e409b
+2026-04-11 00:10:44,927 - app.services.document_service - INFO - Starting ingestion for document_id: 69d92f14f6e0ef4dea5e409b, file: uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:10:44,927 - app.services.document_service - INFO - Starting to load document from: uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:10:44,927 - app.services.document_service - DEBUG - File exists: True, File size: 1522016 bytes
+2026-04-11 00:10:44,953 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:11:28,403 - app.services.document_service - INFO - Successfully loaded 137 chunks from uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf
+2026-04-11 00:11:28,404 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/3', 'parent': {'$ref': '#/body'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 134.77733813427733, 't': 771.7656889132519, 'r': 201.5156161535157, 'b': 765.1821409524465, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 10]}]}, {'self_ref': '#/texts/4', 'parent': {'$ref': '#/body'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 115.11327645361328, 't': 744.7656900382519, 'r': 221.167959234668, 'b': 738.1821420774465, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 17]}]}], 'headings': ['CHÍNH PHỦ'], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 12103432935347867680, 'filename': '7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf'}}}
+2026-04-11 00:11:28,404 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 00:11:28,405 - app.services.document_service - INFO - Metadata added to all 137 chunks
+2026-04-11 00:11:28,405 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/7d59921969ea4feba378c43f9554275c_Nghị định 46_2026_NĐ-CP.pdf', 'filename': 'Nghị định 46_2026_NĐ-CP.pdf', 'chunk_id': 0, 'page': 1, 'heading': 'CHÍNH PHỦ', 'expired_day': ''}
+2026-04-11 00:11:28,406 - app.services.document_service - DEBUG - Loaded 137 chunks for ingestion
+2026-04-11 00:11:28,407 - app.services.document_service - DEBUG - Added document_id to all 137 chunk metadata
+2026-04-11 00:11:28,407 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 00:11:28,407 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 00:11:28,407 - app.services.document_service - INFO - Adding 137 documents to vectorstore
+2026-04-11 00:11:29,293 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 00:11:29,573 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 00:11:29,955 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 00:11:30,201 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 00:11:30,538 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 00:11:30,892 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 00:11:31,214 - app.services.document_service - INFO - Added batch 30-35 chunks
+2026-04-11 00:11:31,551 - app.services.document_service - INFO - Added batch 35-40 chunks
+2026-04-11 00:11:31,872 - app.services.document_service - INFO - Added batch 40-45 chunks
+2026-04-11 00:11:32,234 - app.services.document_service - INFO - Added batch 45-50 chunks
+2026-04-11 00:11:32,656 - app.services.document_service - INFO - Added batch 50-55 chunks
+2026-04-11 00:11:32,959 - app.services.document_service - INFO - Added batch 55-60 chunks
+2026-04-11 00:11:33,125 - app.services.document_service - INFO - Added batch 60-65 chunks
+2026-04-11 00:11:33,326 - app.services.document_service - INFO - Added batch 65-70 chunks
+2026-04-11 00:11:33,609 - app.services.document_service - INFO - Added batch 70-75 chunks
+2026-04-11 00:11:33,817 - app.services.document_service - INFO - Added batch 75-80 chunks
+2026-04-11 00:11:34,014 - app.services.document_service - INFO - Added batch 80-85 chunks
+2026-04-11 00:11:34,223 - app.services.document_service - INFO - Added batch 85-90 chunks
+2026-04-11 00:11:34,428 - app.services.document_service - INFO - Added batch 90-95 chunks
+2026-04-11 00:11:34,726 - app.services.document_service - INFO - Added batch 95-100 chunks
+2026-04-11 00:11:35,110 - app.services.document_service - INFO - Added batch 100-105 chunks
+2026-04-11 00:11:35,340 - app.services.document_service - INFO - Added batch 105-110 chunks
+2026-04-11 00:11:35,560 - app.services.document_service - INFO - Added batch 110-115 chunks
+2026-04-11 00:11:35,893 - app.services.document_service - INFO - Added batch 115-120 chunks
+2026-04-11 00:11:36,101 - app.services.document_service - INFO - Added batch 120-125 chunks
+2026-04-11 00:11:36,373 - app.services.document_service - INFO - Added batch 125-130 chunks
+2026-04-11 00:11:36,651 - app.services.document_service - INFO - Added batch 130-135 chunks
+2026-04-11 00:11:36,896 - app.services.document_service - INFO - Added batch 135-137 chunks
+2026-04-11 00:11:36,896 - app.services.document_service - INFO - Successfully ingested 137 chunks for document_id: 69d92f14f6e0ef4dea5e409b
+2026-04-11 00:11:36,899 - app.services.document_service - INFO - Ingestion completed: 137 chunks
+2026-04-11 00:11:36,899 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d92f14f6e0ef4dea5e409b
+2026-04-11 00:11:36,917 - app.services.document_service - INFO - Document 69d92f14f6e0ef4dea5e409b processed successfully
+2026-04-11 00:11:36,918 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-11 00:11:36,918 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-11 00:11:36,937 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:11:36,939 - app.services.document_service - INFO - Retrieved 3 documents from database
+2026-04-11 00:11:36,939 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:15:20,350 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: Admin1
+2026-04-11 00:15:20,355 - app.services.document_service - DEBUG - Processing file 1/1: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:20,355 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: Admin1
+2026-04-11 00:15:20,355 - app.services.document_service - DEBUG - Processing file: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:20,355 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 00:15:20,355 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 00:15:20,355 - app.services.document_service - DEBUG - Destination path: uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:20,355 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 00:15:20,357 - app.services.document_service - INFO - File saved successfully to: uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:20,357 - app.services.document_service - DEBUG - File size: 1297982 bytes
+2026-04-11 00:15:20,357 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 00:15:20,358 - app.services.document_service - INFO - Document created with ID: 69d93028c774be7d6a6ae316
+2026-04-11 00:15:20,358 - app.services.document_service - INFO - Starting ingestion for document_id: 69d93028c774be7d6a6ae316
+2026-04-11 00:15:20,358 - app.services.document_service - INFO - Starting ingestion for document_id: 69d93028c774be7d6a6ae316, file: uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:20,358 - app.services.document_service - INFO - Starting to load document from: uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:20,358 - app.services.document_service - DEBUG - File exists: True, File size: 1297982 bytes
+2026-04-11 00:15:20,478 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:26,143 - app.services.document_service - INFO - Successfully loaded 9 chunks from uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-11 00:15:26,143 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/1', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397472251257, 't': 731.9199826700426, 'r': 226.1533192049345, 'b': 715.8647509398993, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 21]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 3680910516236496801, 'filename': 'ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf'}}}
+2026-04-11 00:15:26,143 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 00:15:26,143 - app.services.document_service - INFO - Metadata added to all 9 chunks
+2026-04-11 00:15:26,143 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/ad2d4c9ac269430db73a7e1f213e9519_VanBanGoc_TT.04.2026.TT BCT.pdf', 'filename': 'VanBanGoc_TT.04.2026.TT BCT.pdf', 'chunk_id': 0, 'page': 1, 'heading': '', 'expired_day': ''}
+2026-04-11 00:15:26,144 - app.services.document_service - DEBUG - Loaded 9 chunks for ingestion
+2026-04-11 00:15:26,144 - app.services.document_service - DEBUG - Added document_id to all 9 chunk metadata
+2026-04-11 00:15:26,144 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 00:15:26,161 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 00:15:26,301 - app.services.document_service - INFO - Adding 9 documents to vectorstore
+2026-04-11 00:15:26,538 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 00:15:26,706 - app.services.document_service - INFO - Added batch 5-9 chunks
+2026-04-11 00:15:26,707 - app.services.document_service - INFO - Successfully ingested 9 chunks for document_id: 69d93028c774be7d6a6ae316
+2026-04-11 00:15:26,707 - app.services.document_service - INFO - Ingestion completed: 9 chunks
+2026-04-11 00:15:26,707 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69d93028c774be7d6a6ae316
+2026-04-11 00:15:26,714 - app.services.document_service - INFO - Document 69d93028c774be7d6a6ae316 processed successfully
+2026-04-11 00:15:26,714 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-11 00:15:26,714 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-11 00:15:26,735 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:15:26,740 - app.services.document_service - INFO - Retrieved 4 documents from database
+2026-04-11 00:15:26,748 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:17:29,767 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:17:29,770 - app.services.document_service - INFO - Retrieved 4 documents from database
+2026-04-11 00:17:29,774 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:17:29,776 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:17:29,777 - app.services.document_service - INFO - Retrieved 4 documents from database
+2026-04-11 00:17:29,780 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:20:46,752 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:20:46,755 - app.services.document_service - INFO - Retrieved 4 documents from database
+2026-04-11 00:20:46,758 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 00:20:46,759 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 00:20:46,760 - app.services.document_service - INFO - Retrieved 4 documents from database
+2026-04-11 00:20:46,762 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 16:57:32,615 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 16:57:32,622 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 16:57:32,623 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 16:57:32,627 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 16:57:32,630 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 16:57:32,630 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 16:57:34,708 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 16:57:34,708 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 16:57:34,709 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 16:57:34,710 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 16:57:34,711 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 16:57:34,711 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:04:37,979 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:04:37,981 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 17:04:37,981 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:07:19,595 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:07:19,605 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 17:07:19,605 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:07:19,608 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:07:19,609 - app.services.document_service - INFO - Retrieved 0 documents from database
+2026-04-11 17:07:19,609 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:10:48,960 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: admin1
+2026-04-11 17:10:48,970 - app.services.document_service - DEBUG - Processing file 1/1: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:10:48,970 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: admin1
+2026-04-11 17:10:48,970 - app.services.document_service - DEBUG - Processing file: luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:10:48,971 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 17:10:48,971 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 17:10:48,971 - app.services.document_service - DEBUG - Destination path: uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:10:48,971 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 17:10:48,972 - app.services.document_service - INFO - File saved successfully to: uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:10:48,972 - app.services.document_service - DEBUG - File size: 1501809 bytes
+2026-04-11 17:10:48,972 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 17:10:48,985 - app.services.document_service - INFO - Document created with ID: 69da1e28e3cc7903ff32036a
+2026-04-11 17:10:48,986 - app.services.document_service - INFO - Starting ingestion for document_id: 69da1e28e3cc7903ff32036a
+2026-04-11 17:10:48,986 - app.services.document_service - INFO - Starting ingestion for document_id: 69da1e28e3cc7903ff32036a, file: uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:10:48,986 - app.services.document_service - INFO - Starting to load document from: uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:10:48,986 - app.services.document_service - DEBUG - File exists: True, File size: 1501809 bytes
+2026-04-11 17:10:49,149 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:11:12,442 - app.services.document_service - INFO - Successfully loaded 37 chunks from uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf
+2026-04-11 17:11:12,442 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397757767128, 't': 758.4920083463319, 'r': 218.8186154357442, 'b': 743.718789225669, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 22]}]}], 'headings': ['QUỐC HỘI'], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 1072683175175688530, 'filename': '007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf'}}}
+2026-04-11 17:11:12,442 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 17:11:12,443 - app.services.document_service - INFO - Metadata added to all 37 chunks
+2026-04-11 17:11:12,443 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/007e6667984344d386cf47c3b859d186_luat-134-2025-qh15_2512152052.pdf', 'filename': 'luat-134-2025-qh15_2512152052.pdf', 'chunk_id': 0, 'page': 1, 'heading': 'QUỐC HỘI'}
+2026-04-11 17:11:12,444 - app.services.document_service - DEBUG - Loaded 37 chunks for ingestion
+2026-04-11 17:11:12,444 - app.services.document_service - DEBUG - Added document_id to all 37 chunk metadata
+2026-04-11 17:11:12,444 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 17:11:12,474 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 17:11:17,153 - app.services.document_service - INFO - Adding 37 documents to vectorstore
+2026-04-11 17:11:17,436 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 17:11:17,772 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 17:11:18,109 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 17:11:18,496 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 17:11:18,822 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 17:11:19,132 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 17:11:19,358 - app.services.document_service - INFO - Added batch 30-35 chunks
+2026-04-11 17:11:19,471 - app.services.document_service - INFO - Added batch 35-37 chunks
+2026-04-11 17:11:19,471 - app.services.document_service - INFO - Successfully ingested 37 chunks for document_id: 69da1e28e3cc7903ff32036a
+2026-04-11 17:11:19,471 - app.services.document_service - INFO - Ingestion completed: 37 chunks
+2026-04-11 17:11:19,471 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69da1e28e3cc7903ff32036a
+2026-04-11 17:11:19,484 - app.services.document_service - INFO - Document 69da1e28e3cc7903ff32036a processed successfully
+2026-04-11 17:11:19,485 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-11 17:11:19,485 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-11 17:11:19,496 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:11:19,499 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:11:19,499 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:15:15,994 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:15:16,005 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:15:16,005 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:15:16,008 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:15:16,009 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:15:16,009 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:15:16,188 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:15:16,190 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:15:16,190 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:15:16,192 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:15:16,193 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:15:16,193 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:15:16,391 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:15:16,392 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:15:16,392 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:15:16,394 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:15:16,395 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:15:16,395 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:21:30,018 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:21:30,025 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:21:30,025 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:55,830 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:55,839 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:55,839 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:55,841 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:55,842 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:55,842 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:56,491 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:56,493 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:56,493 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:56,495 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:56,496 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:56,496 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:56,639 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:56,640 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:56,640 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:56,642 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:56,643 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:56,643 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:56,835 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:56,836 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:56,836 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:56,838 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:56,839 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:56,839 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:57,018 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:57,019 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:57,019 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:53:57,021 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:53:57,022 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:53:57,022 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 17:54:54,988 - app.services.document_service - INFO - Updating document dates for document_id: 69da1e28e3cc7903ff32036a
+2026-04-11 17:54:55,190 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 17:54:55,191 - app.services.document_service - INFO - Retrieved 1 documents from database
+2026-04-11 17:54:55,191 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-11 19:57:31,611 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: admin1
+2026-04-11 19:57:31,613 - app.services.document_service - DEBUG - Processing file 1/1: Luật-109-2025-QH15.pdf
+2026-04-11 19:57:31,613 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: admin1
+2026-04-11 19:57:31,613 - app.services.document_service - DEBUG - Processing file: Luật-109-2025-QH15.pdf
+2026-04-11 19:57:31,613 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-11 19:57:31,613 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-11 19:57:31,614 - app.services.document_service - DEBUG - Destination path: uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf
+2026-04-11 19:57:31,614 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-11 19:57:31,618 - app.services.document_service - INFO - File saved successfully to: uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf
+2026-04-11 19:57:31,618 - app.services.document_service - DEBUG - File size: 6923249 bytes
+2026-04-11 19:57:31,618 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-11 19:57:31,622 - app.services.document_service - INFO - Document created with ID: 69da453baf0cacda6dc60bc2
+2026-04-11 19:57:31,622 - app.services.document_service - INFO - Starting ingestion for document_id: 69da453baf0cacda6dc60bc2
+2026-04-11 19:57:31,622 - app.services.document_service - INFO - Starting ingestion for document_id: 69da453baf0cacda6dc60bc2, file: uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf
+2026-04-11 19:57:31,622 - app.services.document_service - INFO - Starting to load document from: uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf
+2026-04-11 19:57:31,622 - app.services.document_service - DEBUG - File exists: True, File size: 6923249 bytes
+2026-04-11 19:57:31,642 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf
+2026-04-11 19:57:49,293 - app.services.document_service - INFO - Successfully loaded 31 chunks from uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf
+2026-04-11 19:57:49,295 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/2', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 101.583664, 't': 746.758830455, 'r': 142.380473884, 'b': 734.6948686549999, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 8]}]}, {'self_ref': '#/texts/3', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 150.5, 't': 747.1975914999999, 'r': 234.17306206499993, 'b': 734.8300288600288, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 14]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 15661522117956304264, 'filename': '19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf'}}}
+2026-04-11 19:57:49,295 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-11 19:57:49,295 - app.services.document_service - INFO - Metadata added to all 31 chunks
+2026-04-11 19:57:49,295 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/19be4e1eb83542fba4fb101fcd0bdb5b_Luật-109-2025-QH15.pdf', 'filename': 'Luật-109-2025-QH15.pdf', 'chunk_id': 0, 'page': 1, 'heading': ''}
+2026-04-11 19:57:49,298 - app.services.document_service - DEBUG - Loaded 31 chunks for ingestion
+2026-04-11 19:57:49,298 - app.services.document_service - DEBUG - Added document_id to all 31 chunk metadata
+2026-04-11 19:57:49,298 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-11 19:57:49,298 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-11 19:57:49,298 - app.services.document_service - INFO - Adding 31 documents to vectorstore
+2026-04-11 19:57:51,798 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-11 19:57:52,153 - app.services.document_service - INFO - Added batch 5-10 chunks
+2026-04-11 19:57:52,397 - app.services.document_service - INFO - Added batch 10-15 chunks
+2026-04-11 19:57:52,568 - app.services.document_service - INFO - Added batch 15-20 chunks
+2026-04-11 19:57:52,773 - app.services.document_service - INFO - Added batch 20-25 chunks
+2026-04-11 19:57:52,947 - app.services.document_service - INFO - Added batch 25-30 chunks
+2026-04-11 19:57:53,060 - app.services.document_service - INFO - Added batch 30-31 chunks
+2026-04-11 19:57:53,061 - app.services.document_service - INFO - Successfully ingested 31 chunks for document_id: 69da453baf0cacda6dc60bc2
+2026-04-11 19:57:53,061 - app.services.document_service - INFO - Ingestion completed: 31 chunks
+2026-04-11 19:57:53,061 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69da453baf0cacda6dc60bc2
+2026-04-11 19:57:53,066 - app.services.document_service - INFO - Document 69da453baf0cacda6dc60bc2 processed successfully
+2026-04-11 19:57:53,066 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-11 19:57:53,066 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-11 19:57:53,086 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-11 19:57:53,090 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-11 19:57:53,090 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:12:42,894 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:12:42,904 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-12 00:12:42,905 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:12:42,910 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:12:42,912 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-12 00:12:42,912 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:12:45,967 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:12:45,969 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-12 00:12:45,969 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:12:45,971 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:12:45,973 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-12 00:12:45,973 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:12:49,103 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:12:49,106 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-12 00:12:49,106 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:12:49,109 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:12:49,110 - app.services.document_service - INFO - Retrieved 2 documents from database
+2026-04-12 00:12:49,110 - app.services.document_service - DEBUG - Documents serialized successfully
+2026-04-12 00:13:02,927 - app.services.document_service - INFO - Starting save_multiple_documents: 1 files, uploaded_by: admin1
+2026-04-12 00:13:02,929 - app.services.document_service - DEBUG - Processing file 1/1: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:02,929 - app.services.document_service - INFO - Starting save_and_ingest_document for file uploaded by: admin1
+2026-04-12 00:13:02,929 - app.services.document_service - DEBUG - Processing file: VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:02,929 - app.services.document_service - DEBUG - File extension: .pdf
+2026-04-12 00:13:02,930 - app.services.document_service - DEBUG - Creating upload directory: uploads
+2026-04-12 00:13:02,930 - app.services.document_service - DEBUG - Destination path: uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:02,930 - app.services.document_service - DEBUG - Starting file save operation
+2026-04-12 00:13:02,931 - app.services.document_service - INFO - File saved successfully to: uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:02,931 - app.services.document_service - DEBUG - File size: 1297982 bytes
+2026-04-12 00:13:02,931 - app.services.document_service - DEBUG - Creating document record in database
+2026-04-12 00:13:02,935 - app.services.document_service - INFO - Document created with ID: 69da811e39890d885c8945af
+2026-04-12 00:13:02,935 - app.services.document_service - INFO - Starting ingestion for document_id: 69da811e39890d885c8945af
+2026-04-12 00:13:02,935 - app.services.document_service - INFO - Starting ingestion for document_id: 69da811e39890d885c8945af, file: uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:02,935 - app.services.document_service - INFO - Starting to load document from: uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:02,935 - app.services.document_service - DEBUG - File exists: True, File size: 1297982 bytes
+2026-04-12 00:13:02,958 - app.services.document_service - DEBUG - DoclingLoader initialized for uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:11,274 - app.services.document_service - INFO - Successfully loaded 9 chunks from uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf
+2026-04-12 00:13:11,275 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf', 'dl_meta': {'schema_name': 'docling_core.transforms.chunker.DocMeta', 'version': '1.0.0', 'doc_items': [{'self_ref': '#/texts/1', 'parent': {'$ref': '#/groups/0'}, 'children': [], 'content_layer': 'body', 'label': 'text', 'prov': [{'page_no': 1, 'bbox': {'l': 86.79397472251257, 't': 731.9199826700426, 'r': 226.1533192049345, 'b': 715.8647509398993, 'coord_origin': 'BOTTOMLEFT'}, 'charspan': [0, 21]}]}], 'origin': {'mimetype': 'application/pdf', 'binary_hash': 3680910516236496801, 'filename': '0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf'}}}
+2026-04-12 00:13:11,275 - app.services.document_service - DEBUG - Adding metadata to chunks
+2026-04-12 00:13:11,275 - app.services.document_service - INFO - Metadata added to all 9 chunks
+2026-04-12 00:13:11,275 - app.services.document_service - DEBUG - Sample chunk metadata: {'source': 'uploads/0e87a255ff6c4bdca827aace6faf2a25_VanBanGoc_TT.04.2026.TT BCT.pdf', 'filename': 'VanBanGoc_TT.04.2026.TT BCT.pdf', 'chunk_id': 0, 'page': 1, 'heading': ''}
+2026-04-12 00:13:11,276 - app.services.document_service - DEBUG - Loaded 9 chunks for ingestion
+2026-04-12 00:13:11,276 - app.services.document_service - DEBUG - Added document_id to all 9 chunk metadata
+2026-04-12 00:13:11,276 - app.services.document_service - DEBUG - Getting Milvus client
+2026-04-12 00:13:11,277 - app.services.document_service - DEBUG - Getting vectorstore
+2026-04-12 00:13:11,277 - app.services.document_service - INFO - Adding 9 documents to vectorstore
+2026-04-12 00:13:11,742 - app.services.document_service - INFO - Added batch 0-5 chunks
+2026-04-12 00:13:11,990 - app.services.document_service - INFO - Added batch 5-9 chunks
+2026-04-12 00:13:11,990 - app.services.document_service - INFO - Successfully ingested 9 chunks for document_id: 69da811e39890d885c8945af
+2026-04-12 00:13:11,990 - app.services.document_service - INFO - Ingestion completed: 9 chunks
+2026-04-12 00:13:11,990 - app.services.document_service - DEBUG - Updating document status to '1' for doc_id: 69da811e39890d885c8945af
+2026-04-12 00:13:12,003 - app.services.document_service - INFO - Document 69da811e39890d885c8945af processed successfully
+2026-04-12 00:13:12,003 - app.services.document_service - DEBUG - File 1 processed successfully
+2026-04-12 00:13:12,003 - app.services.document_service - INFO - Completed processing 1 files
+2026-04-12 00:13:12,030 - app.services.document_service - DEBUG - Fetching documents list
+2026-04-12 00:13:12,035 - app.services.document_service - INFO - Retrieved 3 documents from database
+2026-04-12 00:13:12,035 - app.services.document_service - DEBUG - Documents serialized successfully

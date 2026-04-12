@@ -1,12 +1,18 @@
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 from fastapi.responses import FileResponse
 from pathlib import Path
 from app.daos.user_dao import delete_user, list_users, serialize_user, update_user
 from app.schemas.auth_schema import RegisterRequest
-from app.schemas.document_schema import DocumentResponse
+from app.schemas.document_schema import DocumentDatesUpdateRequest, DocumentResponse
 from app.schemas.user_schema import UserCreateRequest, UserResponse, UserRole, UserUpdateRequest
 from app.services.auth_service import register_user
-from app.services.document_service import get_documents, remove_document, save_and_ingest_document, save_multiple_documents
+from app.services.document_service import (
+    get_documents,
+    remove_document,
+    save_and_ingest_document,
+    save_multiple_documents,
+    update_document_dates,
+)
 from app.utils.dependencies import require_admin
 from app.utils.security import hash_password
 from typing import List
@@ -54,26 +60,31 @@ async def remove_user(user_id: str):
     return {"message": "Đã xóa user"}
 
 
-# Document
-# @router.post("/documents/upload", response_model=DocumentResponse)
-# async def upload_document(file: UploadFile = File(...), current_admin: dict = Depends(require_admin)):
-#     return await save_and_ingest_document(file=file, uploaded_by=current_admin["id"])
 
 
 
 @router.post("/documents/upload", response_model=List[DocumentResponse])
 async def upload_documents(
     files: List[UploadFile] = File(...),
+    effective_day: str | None = Form(None),
+    expired_day: str | None = Form(None),
     current_admin: dict = Depends(require_admin),
 ):
     return await save_multiple_documents(
         files=files,
-        uploaded_by=current_admin["id"]
+        uploaded_by=current_admin["username"],
+        effective_day=effective_day,
+        expired_day=expired_day,
     )
 
 @router.get("/documents", response_model=list[DocumentResponse])
 async def list_admin_documents():
     return await get_documents()
+
+
+@router.patch("/documents/{document_id}/dates", response_model=DocumentResponse)
+async def patch_document_dates(document_id: str, payload: DocumentDatesUpdateRequest):
+    return await update_document_dates(document_id=document_id, payload=payload)
 
 
 @router.get("/documents/{document_id}/download")

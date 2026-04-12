@@ -3,7 +3,6 @@ import { AnimatePresence } from "framer-motion";
 
 // components
 import PageTitle from "../components/PageTitle";
-import TextField from "../components/TextField";
 import { Button } from "../components/Button";
 import { CircularProgress } from "../components/Progress";
 
@@ -11,13 +10,19 @@ import { CircularProgress } from "../components/Progress";
 import { useSnackbar } from "../hooks/useSnackbar";
 
 // actions
-import { getDocuments, uploadDocument, deleteDocument } from "../actions/documentActions";
+import { getDocuments, uploadDocument, deleteDocument, updateDocumentDates } from "../actions/documentActions";
 
 const Documents = () => {
   const [documents, setDocuments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [effectiveDay, setEffectiveDay] = useState("");
+  const [expiredDay, setExpiredDay] = useState("");
+  const [editingDocumentId, setEditingDocumentId] = useState(null);
+  const [editingEffectiveDay, setEditingEffectiveDay] = useState("");
+  const [editingExpiredDay, setEditingExpiredDay] = useState("");
+  const [isUpdatingDates, setIsUpdatingDates] = useState(false);
 
   const { showSnackbar } = useSnackbar();
 
@@ -89,6 +94,12 @@ const Documents = () => {
       selectedFiles.forEach(file => {
         formData.append('files', file);
       });
+      if (effectiveDay) {
+        formData.append('effective_day', effectiveDay);
+      }
+      if (expiredDay) {
+        formData.append('expired_day', expiredDay);
+      }
       
       await uploadDocument(formData);
       
@@ -99,6 +110,8 @@ const Documents = () => {
       });
       
       setSelectedFiles([]);
+      setEffectiveDay("");
+      setExpiredDay("");
       // Reset input file
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
@@ -147,6 +160,58 @@ const Documents = () => {
     }
   };
 
+  const handleStartEditDates = (doc) => {
+    setEditingDocumentId(doc.id);
+    setEditingEffectiveDay(doc.effective_day || "");
+    setEditingExpiredDay(doc.expired_day || "");
+  };
+
+  const handleCancelEditDates = () => {
+    setEditingDocumentId(null);
+    setEditingEffectiveDay("");
+    setEditingExpiredDay("");
+  };
+
+  const handleSaveEditDates = async (documentId) => {
+    if (editingEffectiveDay && editingExpiredDay && editingEffectiveDay > editingExpiredDay) {
+      showSnackbar({
+        message: "Ngày hiệu lực phải nhỏ hơn hoặc bằng ngày hết hạn",
+        type: "error",
+        timeOut: 4000,
+      });
+      return;
+    }
+
+    setIsUpdatingDates(true);
+    try {
+      await updateDocumentDates(documentId, {
+        effective_day: editingEffectiveDay,
+        expired_day: editingExpiredDay,
+      });
+
+      showSnackbar({
+        message: "Cập nhật ngày hiệu lực/hết hạn thành công",
+        type: "success",
+        timeOut: 3000,
+      });
+
+      handleCancelEditDates();
+      loadDocuments();
+    } catch (err) {
+      const errorMessage = typeof err === "string"
+        ? err
+        : (err?.response?.data?.detail || "Không thể cập nhật ngày hiệu lực/hết hạn");
+
+      showSnackbar({
+        message: errorMessage,
+        type: "error",
+        timeOut: 5000,
+      });
+    } finally {
+      setIsUpdatingDates(false);
+    }
+  };
+
   const formatFileSize = (bytes) => {
     if (!bytes || bytes === 0) return 'N/A';
     const k = 1024;
@@ -165,12 +230,6 @@ const Documents = () => {
       hour: '2-digit',
       minute: '2-digit'
     });
-  };
-
-  const getFileType = (filename) => {
-    if (!filename) return 'N/A';
-    const extension = filename.substring(filename.lastIndexOf('.') + 1).toLowerCase();
-    return extension;
   };
 
   return (
@@ -194,7 +253,7 @@ const Documents = () => {
             <form onSubmit={handleUpload} className="flex flex-col gap-4">
               <div>
                 <label className="block text-sm font-medium mb-2 text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant">
-                  Chọn tệp (PDF, TXT, DOC, DOCX)
+                  Chọn tệp (PDF, DOCX)
                 </label>
                 <input
                   type="file"
@@ -213,6 +272,28 @@ const Documents = () => {
                     </ul>
                   </div>
                 )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant">
+                  Ngày hiệu lực
+                </label>
+                <input
+                  type="date"
+                  value={effectiveDay}
+                  onChange={(e) => setEffectiveDay(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg bg-light-surfaceContainerHighest dark:bg-dark-surfaceContainerHighest text-light-onSurface dark:text-dark-onSurface border border-light-outline dark:border-dark-outline"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant">
+                  Ngày hết hạn
+                </label>
+                <input
+                  type="date"
+                  value={expiredDay}
+                  onChange={(e) => setExpiredDay(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg bg-light-surfaceContainerHighest dark:bg-dark-surfaceContainerHighest text-light-onSurface dark:text-dark-onSurface border border-light-outline dark:border-dark-outline"
+                />
               </div>
               <div>
                 <Button 
@@ -238,9 +319,10 @@ const Documents = () => {
                   <thead className="bg-light-primary dark:bg-dark-primary">
                     <tr>
                       <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Tên tệp</th>
-                      <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Kích thước</th>
-                      <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Loại tệp</th>
+                      <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Người upload</th>
                       <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Ngày tải lên</th>
+                      <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Ngày hiệu lực</th>
+                      <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Ngày hết hạn</th>
                       <th className="text-left p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Trạng thái</th>
                       <th className="text-right p-4 text-light-onSurface dark:text-dark-onSurface font-semibold">Hành động</th>
                     </tr>
@@ -260,15 +342,34 @@ const Documents = () => {
                           </div>
                         </td>
                         <td className="p-4 text-light-onSurface dark:text-dark-onSurface">
-                          {formatFileSize(doc.file_size)}
-                        </td>
-                        <td className="p-4">
-                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-light-secondaryContainer dark:bg-dark-secondaryContainer text-light-onSecondaryContainer dark:text-dark-onSecondaryContainer">
-                            {getFileType(doc.filename)}
-                          </span>
+                          {doc.uploaded_by || 'N/A'}
                         </td>
                         <td className="p-4 text-light-onSurface dark:text-dark-onSurface">
                           {formatDate(doc.created_at)}
+                        </td>
+                        <td className="p-4 text-light-onSurface dark:text-dark-onSurface">
+                          {editingDocumentId === doc.id ? (
+                            <input
+                              type="date"
+                              value={editingEffectiveDay}
+                              onChange={(e) => setEditingEffectiveDay(e.target.value)}
+                              className="w-full min-w-[150px] px-3 py-1.5 rounded-lg bg-light-surfaceContainerHighest dark:bg-dark-surfaceContainerHighest text-light-onSurface dark:text-dark-onSurface border border-light-outline dark:border-dark-outline"
+                            />
+                          ) : (
+                            doc.effective_day || 'N/A'
+                          )}
+                        </td>
+                        <td className="p-4 text-light-onSurface dark:text-dark-onSurface">
+                          {editingDocumentId === doc.id ? (
+                            <input
+                              type="date"
+                              value={editingExpiredDay}
+                              onChange={(e) => setEditingExpiredDay(e.target.value)}
+                              className="w-full min-w-[150px] px-3 py-1.5 rounded-lg bg-light-surfaceContainerHighest dark:bg-dark-surfaceContainerHighest text-light-onSurface dark:text-dark-onSurface border border-light-outline dark:border-dark-outline"
+                            />
+                          ) : (
+                            doc.expired_day || 'N/A'
+                          )}
                         </td>
                         <td className="p-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -283,17 +384,44 @@ const Documents = () => {
                               : doc.status === 'processing' 
                               ? 'Đang xử lý' 
                               : 'Lỗi'}
-                            {doc.chunk_count > 0 && ` (${doc.chunk_count} chunks)`}
+                     
                           </span>
                         </td>
                         <td className="p-4">
                           <div className="flex justify-end gap-2">
-                            <button
-                              onClick={() => handleDelete(doc.id)}
-                              className="px-3 py-1 text-sm rounded bg-light-error dark:bg-dark-error text-light-onError dark:text-dark-onError hover:bg-light-errorContainer dark:hover:bg-dark-errorContainer transition-colors"
-                            >
-                              Xóa
-                            </button>
+                            {editingDocumentId === doc.id ? (
+                              <>
+                                <button
+                                  onClick={() => handleSaveEditDates(doc.id)}
+                                  disabled={isUpdatingDates}
+                                  className="px-3 py-1 text-sm rounded bg-light-primary dark:bg-dark-primary text-light-onPrimary dark:text-dark-onPrimary hover:bg-light-primaryContainer dark:hover:bg-dark-primaryContainer transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                                >
+                                  {isUpdatingDates ? 'Đang lưu...' : 'Lưu'}
+                                </button>
+                                <button
+                                  onClick={handleCancelEditDates}
+                                  disabled={isUpdatingDates}
+                                  className="px-3 py-1 text-sm rounded bg-light-surfaceContainerHighest dark:bg-dark-surfaceContainerHighest text-light-onSurface dark:text-dark-onSurface hover:bg-light-surfaceContainerHigh dark:hover:bg-dark-surfaceContainerHigh transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                                >
+                                  Hủy
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button
+                                  onClick={() => handleStartEditDates(doc)}
+                                  className="px-3 py-1 text-sm rounded bg-light-secondaryContainer dark:bg-dark-secondaryContainer text-light-onSecondaryContainer dark:text-dark-onSecondaryContainer hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors"
+                                >
+                                  Sửa ngày
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(doc.id)}
+                                  className="px-3 py-1 text-sm rounded bg-light-error dark:bg-dark-error text-light-onError dark:text-dark-onError hover:bg-light-errorContainer dark:hover:bg-dark-errorContainer transition-colors"
+                                >
+                                  Xóa
+                                </button>
+                              </>
+                            )}
                           </div>
                         </td>
                       </tr>

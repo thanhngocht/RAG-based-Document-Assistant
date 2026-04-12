@@ -15,6 +15,8 @@ class DocumentResponse(BaseModel):
     chunk_count: int = 0
     error_message: str | None = None
     file_size: int = 0
+    effective_day: str | None = None
+    expired_day: str | None = None
 
 class DocumentBase(BaseModel):
     filename: str
@@ -49,3 +51,8 @@ class DocumentUploadResponse(BaseModel):
     filename: str
     status: str
     message: str
+
+
+class DocumentDatesUpdateRequest(BaseModel):
+    effective_day: str | None = None
+    expired_day: str | None = None
