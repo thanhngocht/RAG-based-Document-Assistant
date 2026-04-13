@@ -1,195 +1,281 @@
+# services:
+
+#   # ================= OLLAMA =================
+#   ollama:
+#     container_name: ollama
+#     image: ollama/ollama:latest
+#     restart: unless-stopped
+#     ports:
+#       - "11434:11434"
+#     volumes:
+#         - ollama_data:/root/.ollama
+
+
+
+#   # ================= MONGODB =================
+#   mongo:
+#     container_name: mongodb
+#     image: mongo
+#     restart: unless-stopped
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo_data:/data/db
+#     healthcheck:
+#       test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 10
+#       start_period: 20s
+
+#   mongo-express:
+#     container_name: mongo-express
+#     image: mongo-express
+#     restart: unless-stopped
+#     ports:
+#       - "8081:8081"
+#     environment:
+#       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+#       ME_CONFIG_BASICAUTH_ENABLED: true
+#       ME_CONFIG_BASICAUTH_USERNAME: mongoexpressuser
+#       ME_CONFIG_BASICAUTH_PASSWORD: mongoexpresspass
+#     depends_on:
+#       mongo:
+#         condition: service_healthy
+
+#   # ================= MILVUS =================
+#   etcd:
+#     container_name: milvus-etcd
+#     image: quay.io/coreos/etcd:v3.5.25
+#     restart: unless-stopped
+#     environment:
+#       - ETCD_AUTO_COMPACTION_MODE=revision
+#       - ETCD_AUTO_COMPACTION_RETENTION=1000
+#       - ETCD_QUOTA_BACKEND_BYTES=4294967296
+#       - ETCD_SNAPSHOT_COUNT=50000
+#     command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+#     volumes:
+#       - etcd_data:/etcd
+#     healthcheck:
+#       test: ["CMD", "etcdctl", "endpoint", "health"]
+#       interval: 30s
+#       timeout: 20s
+#       retries: 3
+
+#   minio:
+#     container_name: milvus-minio
+#     image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+#     restart: unless-stopped
+#     environment:
+#       MINIO_ACCESS_KEY: minioadmin
+#       MINIO_SECRET_KEY: minioadmin
+#     command: server /minio_data --console-address ":9001"
+#     volumes:
+#       - minio_data:/minio_data
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+#       interval: 30s
+#       timeout: 20s
+#       retries: 3
+
+#   standalone:
+#     container_name: milvus-standalone
+#     image: milvusdb/milvus:latest
+#     restart: unless-stopped
+#     command: ["milvus", "run", "standalone"]
+#     environment:
+#       ETCD_ENDPOINTS: etcd:2379
+#       MINIO_ADDRESS: minio:9000
+#     volumes:
+#       - milvus_data:/var/lib/milvus
+#     depends_on:
+#       etcd:
+#         condition: service_healthy
+#       minio:
+#         condition: service_healthy
+#     ports:
+#       - "19530:19530"
+#       - "9091:9091"
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+#       interval: 30s
+#       start_period: 90s
+#       timeout: 20s
+#       retries: 3
+
+#   attu:
+#     container_name: attu
+#     image: zilliz/attu:v2.6
+#     restart: unless-stopped
+#     environment:
+#       MILVUS_URL: milvus-standalone:19530
+#     ports:
+#       - "8001:3000"
+#     depends_on:
+#       standalone:
+#         condition: service_healthy
+
+#   # ================= BACKEND =================
+#   backend:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.backend
+#     container_name: rag-backend
+#     restart: unless-stopped
+#     env_file: .env
+#     environment:
+#       OLLAMA_HOST: http://ollama:11434
+#       MONGO_URI: mongodb://root:example@mongo:27017/
+#       MILVUS_ENDPOINT: http://standalone:19530
+#     volumes:
+#       - backend_uploads:/app/backend/uploads
+#     ports:
+#       - "8080:8080"
+#     depends_on:
+#       mongo:
+#         condition: service_healthy
+#       standalone:
+#         condition: service_healthy
+#       ollama:
+#         condition: service_started
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 10
+#       start_period: 180s
+
+#   # ================= FRONTEND =================
+#   frontend:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.frontend
+#     container_name: rag-frontend
+#     restart: unless-stopped
+#     ports:
+#       - "5174:80"
+#     depends_on:
+#       backend:
+#         condition: service_healthy
+
+# # ================= VOLUMES =================
+# volumes:
+#   ollama_data:
+#   backend_uploads:
+#   mongo_data:
+#   etcd_data:
+#   minio_data:
+#   milvus_data:
+
+
+
 services:
+ # ---------------- MONGODB ----------------
+ mongo:
+   container_name: mongodb
+   image: mongo
+   restart: always
+   environment:
+     MONGO_INITDB_ROOT_USERNAME: root
+     MONGO_INITDB_ROOT_PASSWORD: example
+   ports:
+     - "27017:27017"
+   volumes:
+     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/mongo:/data/db
 
-  # ================= OLLAMA =================
-  ollama:
-    container_name: ollama
-    image: ollama/ollama:latest
-    restart: unless-stopped
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
-      interval: 10s
-      timeout: 5s
-      retries: 12
-      start_period: 10s
 
-  ollama-pull:
-    image: curlimages/curl:8.8.0
-    container_name: ollama-pull
-    depends_on:
-      ollama:
-        condition: service_healthy
-    env_file: .env
-    command: >
-      sh -c '
-      set -e;
-      echo "Pulling model: $MODEL_NAME";
-      curl -fsS http://ollama:11434/api/pull -d "{\"name\":\"$${MODEL_NAME}\",\"stream\":false}";
+ mongo-express:
+   container_name: mongo-express
+   image: mongo-express
+   restart: always
+   ports:
+     - "8081:8081"
+   environment:
+     ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+     ME_CONFIG_BASICAUTH_ENABLED: true
+     ME_CONFIG_BASICAUTH_USERNAME: mongoexpressuser
+     ME_CONFIG_BASICAUTH_PASSWORD: mongoexpresspass
+   depends_on:
+     - mongo
 
-      echo "Pulling embedding model: $EMBEDDING_MODEL";
-      curl -fsS http://ollama:11434/api/pull -d "{\"name\":\"$${EMBEDDING_MODEL}\",\"stream\":false}";
-      '
-    restart: "no"
 
-  # ================= MONGODB =================
-  mongo:
-    container_name: mongodb
-    image: mongo
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 20s
+ # ---------------- MILVUS ----------------
+ etcd:
+   container_name: milvus-etcd
+   image: quay.io/coreos/etcd:v3.5.25
+   environment:
+     - ETCD_AUTO_COMPACTION_MODE=revision
+     - ETCD_AUTO_COMPACTION_RETENTION=1000
+     - ETCD_QUOTA_BACKEND_BYTES=4294967296
+     - ETCD_SNAPSHOT_COUNT=50000
+   volumes:
+     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
+   command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+   healthcheck:
+     test: ["CMD", "etcdctl", "endpoint", "health"]
+     interval: 30s
+     timeout: 20s
+     retries: 3
 
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    restart: unless-stopped
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-      ME_CONFIG_BASICAUTH_ENABLED: true
-      ME_CONFIG_BASICAUTH_USERNAME: mongoexpressuser
-      ME_CONFIG_BASICAUTH_PASSWORD: mongoexpresspass
-    depends_on:
-      mongo:
-        condition: service_healthy
 
-  # ================= MILVUS =================
-  etcd:
-    container_name: milvus-etcd
-    image: quay.io/coreos/etcd:v3.5.25
-    restart: unless-stopped
-    environment:
-      - ETCD_AUTO_COMPACTION_MODE=revision
-      - ETCD_AUTO_COMPACTION_RETENTION=1000
-      - ETCD_QUOTA_BACKEND_BYTES=4294967296
-      - ETCD_SNAPSHOT_COUNT=50000
-    command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
-    volumes:
-      - etcd_data:/etcd
-    healthcheck:
-      test: ["CMD", "etcdctl", "endpoint", "health"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
 
-  minio:
-    container_name: milvus-minio
-    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
-    restart: unless-stopped
-    environment:
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
-    command: server /minio_data --console-address ":9001"
-    volumes:
-      - minio_data:/minio_data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
 
-  standalone:
-    container_name: milvus-standalone
-    image: milvusdb/milvus:latest
-    restart: unless-stopped
-    command: ["milvus", "run", "standalone"]
-    environment:
-      ETCD_ENDPOINTS: etcd:2379
-      MINIO_ADDRESS: minio:9000
-    volumes:
-      - milvus_data:/var/lib/milvus
-    depends_on:
-      etcd:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
-    ports:
-      - "19530:19530"
-      - "9091:9091"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
-      interval: 30s
-      start_period: 90s
-      timeout: 20s
-      retries: 3
+ minio:
+   container_name: milvus-minio
+   image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+   environment:
+     MINIO_ACCESS_KEY: minioadmin
+     MINIO_SECRET_KEY: minioadmin
+   volumes:
+     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
+   command: minio server /minio_data
+   healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+     interval: 30s
+     timeout: 20s
+     retries: 3
 
-  attu:
-    container_name: attu
-    image: zilliz/attu:v2.6
-    restart: unless-stopped
-    environment:
-      MILVUS_URL: milvus-standalone:19530
-    ports:
-      - "8001:3000"
-    depends_on:
-      standalone:
-        condition: service_healthy
 
-  # ================= BACKEND =================
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-    container_name: rag-backend
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      OLLAMA_HOST: http://ollama:11434
-      MONGO_URI: mongodb://root:example@mongo:27017/
-      MILVUS_ENDPOINT: http://standalone:19530
-    volumes:
-      - backend_uploads:/app/backend/uploads
-    ports:
-      - "8080:8080"
-    depends_on:
-      mongo:
-        condition: service_healthy
-      standalone:
-        condition: service_healthy
-      ollama:
-        condition: service_healthy
-      ollama-pull:
-        condition: service_completed_successfully
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
+ standalone:
+   container_name: milvus-standalone
+   image: milvusdb/milvus:latest
+   command: ["milvus", "run", "standalone"]
+   environment:
+     ETCD_ENDPOINTS: etcd:2379
+     MINIO_ADDRESS: minio:9000
+   volumes:
+     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
+   healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+     interval: 30s
+     start_period: 90s
+     timeout: 20s
+     retries: 3
+   ports:
+     - "19530:19530"
+     - "9091:9091"
+   depends_on:
+     - "etcd"
+     - "minio"
 
-  # ================= FRONTEND =================
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-    container_name: rag-frontend
-    restart: unless-stopped
-    ports:
-      - "5174:80"
-    depends_on:
-      backend:
-        condition: service_healthy
 
-# ================= VOLUMES =================
-volumes:
-  ollama_data:
-  backend_uploads:
-  mongo_data:
-  etcd_data:
-  minio_data:
-  milvus_data:
+
+
+ attu:
+   container_name: attu
+   image: zilliz/attu:v2.6
+   environment:
+     MILVUS_URL: milvus-standalone:19530
+   ports:
+     - "8001:3000"
+   depends_on:
+     - "standalone"
+
+
+networks:
+ default:
+   name: rag
+

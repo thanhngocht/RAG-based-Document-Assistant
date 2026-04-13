@@ -57,7 +57,7 @@ const router = createBrowserRouter([
 
     },
     {
-        path: "/documents",
+        path: "/docs",
         element: <Documents/>,
         loader: protectedLoader,
 

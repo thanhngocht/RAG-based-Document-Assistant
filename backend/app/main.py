@@ -43,3 +43,6 @@ app.include_router(conversation_controller.router, prefix=f"{settings.api_prefix
 async def root():
     return {"message": "Welcome to the FastAPI backend!"}
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}

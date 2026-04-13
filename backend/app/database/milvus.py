@@ -162,13 +162,29 @@ from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 def create_retriever(k=5, dense_weight=0.6, sparse_weight=0.4):
     vectorstore =get_vectorstore()
     today = datetime.utcnow().strftime("%Y-%m-%d")
+
+
+    expr = f"""
+    (
+        expired_day is null
+        or effective_day == ""
+        or expired_day > "{today}"
+    )
+    and (
+        effective_day is null
+        or effective_day == ""
+        or effective_day <= "{today}"
+    )
+    """
+
+
     return vectorstore.as_retriever(
         search_kwargs={
             "k": k,
             "fetch_k": 20,
             "ranker_type": "weighted",
             "ranker_params": {"weights": [dense_weight, sparse_weight]},
-            "expr": f'expired_day is null or expired_day == "" or expired_day > "{today}"',
+            "expr": expr,
         
         }
     )

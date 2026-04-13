@@ -114,6 +114,7 @@ def _load_documents_from_file(file_path: Path) -> list[Document]:
             file_path=str(file_path),
             export_type=ExportType.DOC_CHUNKS,
             chunker=GLOBAL_CHUNKER,
+            # converter = build_converter,
         ) 
         logger.debug(f"DoclingLoader initialized for {file_path}")
         print(f"Loading and chunking document {file_path} with DoclingLoader...")
